@@ -1,0 +1,2 @@
+import {COOKIE,db,hash,token,originCheck,errorResponse} from '../../../../lib/auth';
+export async function POST(request:Request){try{originCheck(request);await db().prepare('DELETE FROM admin_sessions WHERE digest=?').bind(await hash(token(request))).run();return Response.json({ok:true},{headers:{'Set-Cookie':`${COOKIE}=; Path=/; Secure; HttpOnly; SameSite=Strict; Max-Age=0`}})}catch(e){return errorResponse(e)}}
