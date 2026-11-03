@@ -14,6 +14,12 @@ dependencies {
 }
 tasks.test { useJUnitPlatform() }
 tasks.named<JavaExec>("run") { workingDir = rootProject.projectDir }
+tasks.register<JavaExec>("validateAppIssue") {
+    dependsOn("classes")
+    mainClass.set("AppIssueKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    workingDir = rootProject.projectDir
+}
 tasks.register<JavaExec>("exportCatalog") {
     dependsOn("classes")
     mainClass.set("MainKt")

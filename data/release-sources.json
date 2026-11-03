@@ -1,0 +1,18 @@
+[
+  {
+    "repository": "alltechdev/DietDroid",
+    "permission": "Public release mirroring was requested by the KosherHub maintainer after receiving the DietDroid creator's authorization to rehost these resources.",
+    "notice": "Unmodified upstream release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+    "deviceRules": [
+      { "releaseTagPrefix": "tcl-flip2-", "deviceId": "tcl-flip-2" },
+      { "releaseTagPrefix": "cat-s22-flip-", "deviceId": "cat-s22-flip" },
+      { "releaseTagPrefix": "f21pro-", "deviceId": "f21-pro" }
+    ]
+  },
+  {
+    "repository": "Noochtech/awesome-qin-f21-pro",
+    "permission": "Public release mirroring was requested by the KosherHub maintainer as part of the DietDroid/Qin F21 Pro resource migration.",
+    "notice": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+    "defaultDeviceId": "f21-pro"
+  }
+]

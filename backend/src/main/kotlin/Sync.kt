@@ -12,7 +12,7 @@ import kotlinx.serialization.json.*
 val http:HttpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(20)).followRedirects(HttpClient.Redirect.NORMAL).build()
 fun request(url:String,limit:Int=4_000_000):ByteArray {
     val uri=URI(url);require(uri.scheme=="https"&&uri.userInfo==null){"Only public HTTPS sources are accepted"}
-    require(uri.host in setOf("dietdroid.com","api.github.com","github.com","raw.githubusercontent.com","codeload.github.com")){"Source host is not allowlisted"}
+    require(uri.host in setOf("dietdroid.com","api.github.com","github.com","raw.githubusercontent.com","codeload.github.com","f-droid.org")){"Source host is not allowlisted"}
     val builder=HttpRequest.newBuilder(uri).timeout(Duration.ofSeconds(90)).header("User-Agent","KosherHub-catalog/1.0 (https://github.com/QinFrance/KosherHub)")
     if(uri.host=="api.github.com")System.getenv("GITHUB_TOKEN")?.let{builder.header("Authorization","Bearer $it")}
     val future=http.sendAsync(builder.GET().build(),HttpResponse.BodyHandlers.ofByteArray())
@@ -21,7 +21,8 @@ fun request(url:String,limit:Int=4_000_000):ByteArray {
     val body=response.body();require(body.size<=limit){"Source exceeds the size limit"};return body
 }
 fun githubJson(url:String):JsonObject = catalogJson.parseToJsonElement(request(url).decodeToString()).jsonObject
-@Serializable data class AppSource(val id:String,val repository:String,val license:String,val assetPattern:String,val mirrorApproved:Boolean=false,val attribution:String="",val version:String="",val assetName:String="")
+@Serializable data class ReviewedSource(val name:String,val url:String,val sha256:String)
+@Serializable data class AppSource(val id:String,val repository:String,val license:String,val assetPattern:String,val mirrorApproved:Boolean=false,val attribution:String="",val version:String="",val assetName:String="",val sourceReviewVersion:String="",val binarySha256:String="",val sourceBundleUrl:String="",val sourceBundleSha256:String="",val auxiliarySources:List<ReviewedSource> = emptyList())
 fun sources():List<AppSource> = catalogJson.decodeFromString(File("data/app-sources.json").readText())
 fun syncCatalog(){
  val previous=loadCatalog();var successes=0

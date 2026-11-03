@@ -10,7 +10,11 @@ import kotlinx.serialization.json.Json
 import java.io.File
 
 val catalogJson=Json { ignoreUnknownKeys=true;prettyPrint=true;encodeDefaults=true }
-fun loadCatalog(path:String = System.getenv("CATALOG_PATH")?:"data/catalog.json"):Catalog = catalogJson.decodeFromString(File(path).readText())
+fun loadCatalog(path:String = System.getenv("CATALOG_PATH")?:"data/catalog.json"):Catalog {
+    val catalog = catalogJson.decodeFromString<Catalog>(File(path).readText())
+    val mirrors = File("data/firmware-mirrors.json")
+    return if (mirrors.exists()) applyFirmwareMirrors(catalog, catalogJson.decodeFromString<FirmwareMirrorIndex>(mirrors.readText()).assets) else catalog
+}
 fun Application.module(catalog:Catalog = loadCatalog()) {
     install(ContentNegotiation){json(catalogJson)}
     routing {
@@ -24,6 +28,7 @@ fun Application.module(catalog:Catalog = loadCatalog()) {
     }
 }
 fun main(args:Array<String>){
+    if("--mirror-releases" in args){mirrorReleaseAssets();return}
     if("--sync" in args){syncCatalog();return}
     if("--mirror" in args){mirrorApps();return}
     if("--export" in args){val output=File("frontend/src/jsMain/resources/catalog.json");output.parentFile.mkdirs();output.writeText(catalogJson.encodeToString(Catalog.serializer(),loadCatalog()));println("Exported catalog for the cookie-free static site.");return}

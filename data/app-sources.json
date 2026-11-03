@@ -11,9 +11,19 @@
   {
     "id": "fossify-calculator",
     "repository": "FossifyOrg/Calculator",
-    "license": "GPL-3.0",
+    "license": "GPL-3.0-only",
     "assetPattern": ".*foss-release\\.apk",
-    "mirrorApproved": false,
-    "attribution": "Fossify and contributors. Binary mirroring awaits complete corresponding-source review."
+    "mirrorApproved": true,
+    "assetName": "calculator-10-foss-release.apk",
+    "sourceReviewVersion": "1.4.0",
+    "binarySha256": "7c5443c22d6d62c67dfe80df33ea9161ff0fa440f92590bcb45d7008b57613ed",
+    "sourceBundleUrl": "https://f-droid.org/repo/org.fossify.math_10_src.tar.gz",
+    "sourceBundleSha256": "afcd81289121e72c5b3f49681c9ecc28c54da58f7a8bc76336e76967bd385d6b",
+    "auxiliarySources": [{
+      "name": "commons-6.1.0",
+      "url": "https://github.com/FossifyOrg/Commons/archive/refs/tags/6.1.0.tar.gz",
+      "sha256": "a6393f9d762645af6040f58e90e01500b79f8c4580e58adb60572aabbb1dae72"
+    }],
+    "attribution": "Fossify and contributors, including the original Simple Mobile Tools contributors. Official unmodified APK. Corresponding application source package from F-Droid and Fossify Commons 6.1.0 sources are hosted alongside the APK. Future GPL versions require a new corresponding-source review."
   }
 ]

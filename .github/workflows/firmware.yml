@@ -1,0 +1,57 @@
+name: Mirror firmware releases
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/src/main/kotlin/ReleaseMirror.kt'
+      - 'backend/src/test/kotlin/ReleaseMirrorTest.kt'
+      - 'data/release-sources.json'
+      - '.github/workflows/firmware.yml'
+  schedule:
+    - cron: '10 5 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: firmware-mirror
+  cancel-in-progress: false
+jobs:
+  mirror:
+    if: github.repository == 'QinFrance/KosherHub'
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.14.3'
+      - name: Validate Kotlin mirror and backend
+        run: gradle :backend:test --no-daemon --console=plain
+      - name: Stream approved public releases into KosherHub hosting
+        id: mirror
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gradle :backend:run --args='--mirror-releases' --no-daemon --console=plain
+      - name: Save verified mirror provenance, including partial progress
+        if: always() && (steps.mirror.outcome == 'success' || steps.mirror.outcome == 'failure')
+        run: |
+          if [ ! -f data/firmware-mirrors.json ]; then exit 0; fi
+          git config user.name 'kosherhub-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/firmware-mirrors.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update hosted firmware and SHA-256 provenance [skip ci]'
+            for attempt in 1 2 3; do
+              git pull --rebase origin main
+              if git push; then exit 0; fi
+            done
+            exit 1
+          fi
