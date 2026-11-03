@@ -1,0 +1,18 @@
+Fossify Calculator
+Upstream: https://github.com/FossifyOrg/Calculator
+Version: 1.4.0
+Fossify and contributors, including the original Simple Mobile Tools contributors. Official unmodified APK. Corresponding application source package from F-Droid and Fossify Commons 6.1.0 sources are hosted alongside the APK. Future GPL versions require a new corresponding-source review.
+License: GPL-3.0-only
+Unmodified upstream APK, redistributed by KosherHub. Original in-APK licenses, notices, and signing certificate are retained.
+No kosher certification is asserted.
+APK SHA-256: 7c5443c22d6d62c67dfe80df33ea9161ff0fa440f92590bcb45d7008b57613ed
+Source: fossify-calculator-1.4.0.SOURCE.tar.gz
+Source provenance: https://f-droid.org/repo/org.fossify.math_10_src.tar.gz
+Source SHA-256: afcd81289121e72c5b3f49681c9ecc28c54da58f7a8bc76336e76967bd385d6b
+Library source: fossify-calculator-1.4.0.commons-6.1.0.SOURCE.tar.gz
+Library provenance: https://github.com/FossifyOrg/Commons/archive/refs/tags/6.1.0.tar.gz
+Library SHA-256: a6393f9d762645af6040f58e90e01500b79f8c4580e58adb60572aabbb1dae72
+The F-Droid source archive is the source package associated with this developer-signed release; it preserves the application sources, licenses, dependency versions, resources, and build scripts.
+Fossify Commons source for the exact declared version is also provided alongside this notice. The Gradle build resolves its declared standard public dependencies.
+Build the fossRelease variant using the Android SDK and the Gradle version declared in the source archive. No signing key is supplied; users may build and sign their own APK.
+Source/reproducibility record: https://f-droid.org/en/packages/org.fossify.math/ and https://verification.f-droid.org/packages/org.fossify.math/
