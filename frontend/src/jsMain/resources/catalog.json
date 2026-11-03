@@ -39,7 +39,7 @@
                 {
                     "title": "Android Auto for CAT",
                     "url": "https://drive.google.com/drive/folders/1NBDiUbSGnkh8rzP9cusv6ClvvjNz8KEG?usp=sharing",
-                    "kind": "guide",
+                    "kind": "tools",
                     "source": "DietDroid",
                     "license": "Not specified",
                     "mirrorUrl": "",
@@ -54,7 +54,26 @@
             "form": "bar",
             "description": "Listed in DietDroid’s phone directory. Its detail page could not be retrieved during this verification.",
             "sourceUrl": "https://dietdroid.com/nokia-800-tough/",
-            "resources": []
+            "resources": [
+                {
+                    "title": "Install SkyOS",
+                    "url": "https://github.com/AshiVered/SkyOS",
+                    "kind": "guide",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "SkyOS",
+                    "url": "https://drive.google.com/drive/folders/1woX8mN_vl6wH3-9jKb8wIuKMsJcDT16I",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                }
+            ]
         },
         {
             "id": "nokia-3210-4g",
@@ -103,7 +122,7 @@
                 },
                 {
                     "title": "KEFS MODIFIED",
-                    "url": "https://docs.google.com/document/u/0/d/1906aYesws-N5yRhmyQe1S-81hyrHIhvxvDDOgOPICcw/mobilebasic?pli=1&urp=gmail_link",
+                    "url": "https://docs.google.com/document/u/0/d/1906aYesws-N5yRhmyQe1S-81hyrHIhvxvDDOgOPICcw/mobilebasic?urp=gmail_link&pli=1",
                     "kind": "guide",
                     "source": "DietDroid",
                     "license": "Not specified",
@@ -191,15 +210,6 @@
                     "license": "Not specified",
                     "mirrorUrl": "",
                     "sha256": ""
-                },
-                {
-                    "title": "ROOTED BOOT",
-                    "url": "https://drive.google.com/file/d/140FgqxSrkis8bsb190NQ5AiGZrkFYmzQ/view?usp=sharinghttps%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F140FgqxSrkis8bsb190NQ5AiGZrkFYmzQ%2Fview%3Fusp%3Dsharing",
-                    "kind": "firmware",
-                    "source": "DietDroid",
-                    "license": "Not specified",
-                    "mirrorUrl": "",
-                    "sha256": ""
                 }
             ]
         },
@@ -241,7 +251,7 @@
                 {
                     "title": "driver_auto_installer_exe_v5.1632.00",
                     "url": "https://drive.google.com/drive/folders/1lJb3asilM84urKb73OOdzzahxCxs30-X?usp=sharing",
-                    "kind": "guide",
+                    "kind": "tools",
                     "source": "DietDroid",
                     "license": "Not specified",
                     "mirrorUrl": "",
@@ -311,15 +321,6 @@
                     "sha256": ""
                 },
                 {
-                    "title": "open_gapps-arm64-11.0-pico-20211217",
-                    "url": "https://drive.google.com/drive/folders/1C1cxM2AnAWwS99vXNk0GYcLinZ897OXY?usp=sharing",
-                    "kind": "guide",
-                    "source": "DietDroid",
-                    "license": "Not specified",
-                    "mirrorUrl": "",
-                    "sha256": ""
-                },
-                {
                     "title": "SP Flash Tool V5",
                     "url": "https://files.dietdroid.com/api/public/dl/N7ZUl9S1/phones/f21_pro/sp_flash_tool_v5/sp_flash_tool_v5.zip",
                     "kind": "tools",
@@ -382,7 +383,7 @@
             "sha256": "7914e9aaac823667c601b1143d2da6f221398c41a8bb63f48a9c9d46dce0d0a2",
             "bytes": 630327,
             "status": "mirrored",
-            "notes": "Android 7.0+. Upstream describes only Vibrate permission. General-purpose software; review suitability with your own provider. License and attribution: downloads/simple-keyboard-149.LICENSE.txt and downloads/simple-keyboard-149.NOTICE.txt."
+            "notes": "Android 7.0+. Upstream describes only Vibrate permission. General-purpose software; review suitability with your own provider. License and attribution: downloads/simple-keyboard-149.LICENSE.txt and downloads/simple-keyboard-149.NOTICE.txt. License and attribution: downloads/simple-keyboard-149.LICENSE.txt and downloads/simple-keyboard-149.NOTICE.txt."
         },
         {
             "id": "fossify-calculator",
