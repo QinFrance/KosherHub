@@ -24,10 +24,11 @@ fun Application.module(catalog:Catalog = loadCatalog()) {
         get("/api/apps"){call.respond(catalog.apps)}
         get("/api/roms"){call.respond(catalog.devices.flatMap{d->d.resources.filter{it.kind=="firmware"}})}
         get("/catalog.json"){call.respond(catalog)}
-        staticFiles("/",File(System.getenv("FRONTEND_PATH")?:"frontend/build/dist/js/productionExecutable"))
+        staticFiles("/",File(System.getenv("FRONTEND_PATH")?:"frontend/build/dist/wasmJs/productionExecutable"))
     }
 }
 fun main(args:Array<String>){
+    if("--assets" in args){prepareUiAssets();return}
     if("--mirror-releases" in args){mirrorReleaseAssets();return}
     if("--sync" in args){syncCatalog();return}
     if("--mirror" in args){mirrorApps();return}

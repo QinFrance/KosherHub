@@ -6,6 +6,9 @@ on:
   schedule:
     - cron: '23 5 * * *'
   workflow_dispatch:
+  workflow_run:
+    workflows: ['Mirror firmware releases']
+    types: [completed]
 permissions:
   contents: read
 concurrency:
@@ -23,6 +26,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -30,39 +35,36 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.14.3'
-      - name: Validate backend
+      - name: Validate Kotlin backend and ingestion
         run: gradle :backend:test --no-daemon
       - name: Refresh trusted sources
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gradle :backend:run --args='--sync' --no-daemon
-      - name: Mirror explicitly approved releases with license and notices
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Host approved APKs with licenses and corresponding source
         run: gradle :backend:run --args='--mirror' --no-daemon
-      - name: Export generated API snapshot
+      - name: Reconstruct pinned local logos and font
+        run: gradle :backend:run --args='--assets' --no-daemon
+      - name: Export catalog including verified hosted firmware
         run: gradle :backend:run --args='--export' --no-daemon
-      - name: Compile Compose HTML
-        run: gradle :frontend:jsBrowserDistribution --no-daemon
-      - name: Prepare GitHub Pages
+      - name: Compile Kotlin WebAssembly and Material 3 Expressive
+        run: gradle :frontend:wasmJsBrowserDistribution --no-daemon
+      - name: Prepare Pages artifact
         run: |
-          mkdir -p docs
-          cp -R frontend/build/dist/js/productionExecutable/. docs/
-          touch docs/.nojekyll
-          find docs -name "*.map" -delete
-      - name: Publish catalog and website
+          touch frontend/build/dist/wasmJs/productionExecutable/.nojekyll
+          find frontend/build/dist/wasmJs/productionExecutable -name '*.map' -delete
+      - name: Save refreshed catalog
         run: |
           git config user.name 'kosherhub-bot'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/catalog.json frontend/src/jsMain/resources/catalog.json docs
+          git add data/catalog.json data/cfop-catalog.json frontend/src/jsMain/resources/catalog.json
           if ! git diff --cached --quiet; then
-            git commit -m 'Refresh verified catalog and Kotlin website [skip ci]'
+            git commit -m 'Refresh verified catalog [skip ci]'
+            git pull --rebase origin main
             git push
           fi
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs
+          path: frontend/build/dist/wasmJs/productionExecutable
       - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

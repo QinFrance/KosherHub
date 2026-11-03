@@ -88,4 +88,20 @@ class ReleaseMirrorTest {
         assertTrue(once.devices.last().resources.isEmpty())
         assertEquals(once, applyFirmwareMirrors(once, listOf(mirror)))
     }
+
+    @Test fun identicalHostedBinaryAliasesUseOneFileCardWithoutLosingIndexProvenance() {
+        val catalog = Catalog(devices = listOf(Device("f21-pro", "Qin F21 Pro", "Qin", "bar", "", "")))
+        val first = FirmwareMirror("alltechdev/DietDroid", "f21pro-firmware", "", 1, "OLD-F21-USA.rar", "https://github.com/alltechdev/DietDroid/releases/download/v1/OLD-F21-USA.rar", "", 42,
+            "a".repeat(64), "dietdroid-archive", 10, "OLD-F21-USA.rar", "https://github.com/QinFrance/KosherHub/releases/download/dietdroid-archive/OLD-F21-USA.rar", "2026-11-03T00:00:00Z", listOf("f21-pro"))
+        val alias = first.copy(sourceRepository = "Noochtech/awesome-qin-f21-pro", sourceAssetId = 2, sourceAssetName = "v1-F21-USA.rar",
+            targetAssetId = 20, targetAssetName = "v1-F21-USA.rar", mirrorUrl = "https://github.com/QinFrance/KosherHub/releases/download/nooch-v1/v1-F21-USA.rar")
+        val index = FirmwareMirrorIndex(assets = listOf(first, alias))
+        val merged = applyFirmwareMirrors(catalog, index.assets)
+        assertEquals(1, merged.devices.single().resources.size)
+        assertEquals(2, index.assets.size)
+        assertEquals(merged, applyFirmwareMirrors(merged, index.assets))
+        // Different data remains available even when the friendly filename is similar.
+        val different = alias.copy(sha256 = "b".repeat(64), mirrorUrl = alias.mirrorUrl + ".new")
+        assertEquals(2, applyFirmwareMirrors(catalog, listOf(first, different)).devices.single().resources.size)
+    }
 }

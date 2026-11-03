@@ -1,0 +1,39 @@
+{
+  "fontName": "Noto Sans Hebrew",
+  "resourceName": "catalog_sans",
+  "localResourcePath": "frontend/src/commonMain/composeResources/font/catalog_sans.ttf",
+  "originalFilename": "NotoSansHebrew[wdth,wght].ttf",
+  "sourceRepository": "google/fonts",
+  "sourceCommit": "2fe1e8c6b137fb13041a7cfca6fdcd8a910ea4dc",
+  "sourcePath": "ofl/notosanshebrew/NotoSansHebrew[wdth,wght].ttf",
+  "sourceUrl": "https://raw.githubusercontent.com/google/fonts/2fe1e8c6b137fb13041a7cfca6fdcd8a910ea4dc/ofl/notosanshebrew/NotoSansHebrew%5Bwdth%2Cwght%5D.ttf",
+  "gitBlobSha": "f31f73b8be8086692ff0156544f80975640e5a42",
+  "sha256": "7ef36a2c3593758cdb622e1bdef4f84523e92fbc3ccc667438dd80ff54c2de88",
+  "sizeBytes": 112640,
+  "modified": false,
+  "license": "SIL Open Font License 1.1",
+  "licenseFile": "resources/fonts/OFL.txt",
+  "verifiedDate": "2026-11-03",
+  "cmapVerification": {
+    "method": "Direct SFNT cmap parser because fontTools is unavailable",
+    "formats": [
+      4
+    ],
+    "mappedCodepointCount": 464,
+    "asciiPrintableComplete": true,
+    "hebrewLettersComplete": true,
+    "yiddishLigaturesAndPunctuationComplete": true,
+    "catalogLabelsTested": 14,
+    "catalogLabelsMissingGlyphs": {}
+  },
+  "variableAxes": {
+    "weight": [
+      100,
+      900
+    ],
+    "width": [
+      62.5,
+      100
+    ]
+  }
+}

@@ -135,14 +135,20 @@ internal fun applyFirmwareMirrors(catalog: Catalog, mirrors: List<FirmwareMirror
             if (mirrored == null) resource else resource.copy(mirrorUrl = mirrored.mirrorUrl, sha256 = mirrored.sha256)
         }.toMutableList()
         applicable.forEach { mirror ->
-            if (resources.none { it.mirrorUrl == mirror.mirrorUrl }) {
+            if (resources.none { it.mirrorUrl == mirror.mirrorUrl ||
+                    (it.mirrorUrl.isNotBlank() && Regex("[a-fA-F0-9]{64}").matches(mirror.sha256) && it.sha256.equals(mirror.sha256, true)) }) {
                 val tool = mirror.sourceReleaseTag.contains("tool", true) || mirror.sourceReleaseTag.contains("module", true) ||
                     mirror.sourceAssetName.substringAfterLast('.', "").lowercase() in setOf("exe", "dll", "bat", "sh", "msi", "ps1")
                 resources += Resource(mirror.sourceAssetName, mirror.sourceAssetUrl, if (tool) "tools" else "firmware",
                     mirror.sourceRepository, mirror.notice, mirror.mirrorUrl, mirror.sha256)
             }
         }
-        device.copy(resources = resources)
+        // A release can be republished under another filename/repository. Keep every provenance
+        // record in the index, but show a verified binary only once in the device's file list.
+        val seenHashes = mutableSetOf<String>()
+        device.copy(resources = resources.filter { resource ->
+            if (resource.mirrorUrl.isNotBlank() && Regex("[a-fA-F0-9]{64}").matches(resource.sha256)) seenHashes.add(resource.sha256.lowercase()) else true
+        })
     }
 )
 

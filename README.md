@@ -1,47 +1,44 @@
 # KosherHub
 
-A small community home for phone documentation, Android apps, and ROM resources. English-first, open source, and deliberately personal rather than corporate.
+A small, English-first catalog of phones, Android apps, and ROMs.
 
-## Stack
+## Kotlin throughout
 
-- **Frontend:** Kotlin/JS, Jetpack Compose runtime and Compose HTML. Material 3 expressive design tokens, original device SVGs, desktop side rail, and a separately composed mobile experience using light surfaces and bottom navigation. Compose HTML renders accessible DOM elements; Android Material 3 widgets are not falsely presented as DOM widgets.
-- **Backend:** Kotlin/JVM and Ktor, with shared serializable Kotlin catalog models.
-- **Free public deployment:** GitHub Pages serves the compiled Kotlin frontend and a generated JSON API snapshot. It uses no iframe, hosted Sites dependency, account, cookies, trackers, or database credentials.
-- **Live Ktor server:** available through the Dockerfile or `gradle :backend:run`; GitHub Pages cannot run a JVM server continuously. It exposes the same read-only catalog and serves the compiled frontend. No JVM hosting account is silently provisioned.
+The interface uses **Compose Multiplatform UI on Kotlin/Wasm**, real Material 3 components and `MaterialExpressiveTheme`. It replaces the earlier Compose HTML implementation. All application and ingestion logic is Kotlin. The only JavaScript delivered to browsers is generated compiler/Skia runtime glue; generated builds are published as Pages artifacts, not committed as hand-written source.
 
-## Build and run
+The palette has exactly two families: blue and achromatic neutrals. Every Material color role is explicitly set for light and dark themes. Genuine app logos are bundled locally and rendered in monochrome. Google Material Symbols Rounded are bundled locally under Apache 2.0. Noto Sans Hebrew supports both English and Hebrew names and is bundled under the SIL Open Font License. Sources and hashes are in `resources/`.
 
-Use Java 21 and Gradle 8.14.3:
+Desktop uses a compact side navigation and adaptive grids. Mobile uses a bottom navigation bar. App, phone and file details have their own shareable hash routes, parent Back controls, and native browser Back/Forward support. Search/filter state survives returning from a detail page. There are no accounts, cookies, trackers, ads, or saved preferences.
+
+## Build
+
+Java 21, Gradle 8.14.3:
 
 ```sh
 gradle :backend:test
 gradle :backend:run --args='--sync'
 gradle :backend:run --args='--mirror'
-gradle :backend:run --args='--export'
-gradle :frontend:jsBrowserDistribution
+gradle :backend:run --args='--assets'
+gradle :frontend:wasmJsBrowserDistribution
 gradle :backend:run
 ```
 
-Open localhost:8080. The server supports `/health`, `/api/catalog`, `/api/devices`, `/api/apps`, `/api/roms`, and `/catalog.json`. Server-only paths are configurable through `PORT`, `CATALOG_PATH`, and `FRONTEND_PATH`. No secrets are needed for reading the public catalog. An optional CI `GITHUB_TOKEN` increases upstream API rate limits and is never shipped in the browser.
+The frontend build depends on exporting the latest catalog. `--assets` reconstructs all 16 genuine app logos and the font from exact reviewed upstream URLs, sizes, Git blob identities and SHA-256 hashes. Kotlin/Wasm needs a modern browser with WasmGC support.
 
-## Automated content
+GitHub Pages serves the compiled site and generated `catalog.json`. The Kotlin/Ktor server is also supplied for separate JVM hosting, with `/health`, `/api/catalog`, `/api/devices`, `/api/apps`, `/api/roms`, and static files. Pages does not run a permanent JVM server. `PORT`, `CATALOG_PATH`, and `FRONTEND_PATH` configure server-only deployment.
 
-The daily/push workflow refreshes DietDroid resource metadata and known apps' official GitHub releases, mirrors only explicitly approved permissive-license binaries, verifies SHA-256, preserves license and attribution notices, tests Ktor, compiles Compose HTML, and publishes `docs/` for GitHub Pages. Failed sources preserve last-known records. No source HTML is executed.
+## Hosting and automation
 
-GitHub app issues trigger a separate workflow that validates the original repository, license and actual APK release, then prepares a metadata-only pull request. Issue content is not executed, and unknown apps are never automatically approved or downloaded. Regular refreshes do not depend on users submitting issues.
+The daily catalog workflow tests the backend, refreshes known sources, mirrors reviewed APK/source pairs, rebuilds local icons, and publishes a Pages artifact. Firmware mirroring uses a separate Kotlin streaming workflow, with one temporary file at a time, size limits, source and target SHA-256 verification, resumable checkpoints and immutable target names. Files are hosted in this repository's GitHub Releases, not inside Git history. Verified mirror metadata is merged into the site after each completed workflow, including partial results.
 
-## Sources and licensing
+The approved firmware sources are DietDroid and Noochtech, requested by the owner for migration. **DietDroid's repository is private**: this repository's automatic GitHub token cannot read its binary assets. That source remains explicitly reported as incomplete until those assets are made accessible through an authorized transfer. Public Noochtech transfers operate independently. No credentials are invented or copied from the browser. Provenance, upstream requirements and embedded notices are retained; no blanket copyright license or kosher certification is asserted.
 
-Phone metadata includes original summaries and source attribution to DietDroid. Firmware without verified redistribution rights stays a source reference; it is not silently rehosted. Simple Keyboard is an unmodified Apache-2.0 upstream APK, accompanied by its original license and upstream/AOSP attribution. Fossify Calculator is a real GPL release; its binary is not mirrored until full corresponding-source requirements are reviewed. No listing constitutes kosher certification.
+Simple Keyboard is an unmodified Apache-2.0 APK with its license, notices and source archive. Fossify Calculator 1.4.0 is hosted with its exact reviewed F-Droid corresponding-source package, Fossify Commons 6.1.0 sources, GPL license and notices. New GPL versions require a corresponding-source review before mirroring. CFOP contributes 14 factual app records under its separate CC-BY-NC-SA-4.0 metadata license; unverified third-party binary rights are not inferred from that catalog license. Their original release downloads remain available until redistribution requirements are established.
 
-The Shalom Karr app-store repository is a prototype with fictional listings, simulated downloads, and `.test` URLs. It has no redistribution license for its source. Those mock apps are not represented as real downloads here.
+GitHub app issues are processed entirely in Kotlin. They produce a review branch or metadata-only PR; untrusted issue text is never executed and cannot approve or download a new APK. Regular source refreshes do not depend on contributions.
 
-The coffee label is present, but no payment destination has been invented. It opens an honest support dialog until the owner configures a donation account. Contact uses public GitHub issues, so no private email is exposed in the interface.
+## Community
 
-## Security and privacy
+Contact uses GitHub issues. The coffee icon opens a support dialog; no payment destination has been invented. The Shalom Karr prototype's fictional apps and `.test` downloads are not represented as real downloads.
 
-Do not commit credentials, personal contact details, local runtime files, or private user submissions. No account or cookie is needed on the site. External GitHub issue submission follows GitHub's own account rules. CI source imports are allowlisted; APKs are never executed during ingestion. Download checksums identify files, not safety or religious suitability.
-
-## CFOP catalog
-
-Includes 14 factual app records from cfopuser/app-store, credited under its CC-BY-NC-SA-4.0 catalog license. This dataset has a separate license from the MIT application code. Patched builds are clearly labeled as community builds and are linked to their original release, not claimed as official publisher APKs or mirrored without redistribution rights. The Kotlin importer refreshes the CFOP JSON index automatically.
+Application code is MIT licensed. Data, font, icon, APK and source-archive licenses remain separate and retain their attribution. Never commit credentials, private chat content, private contact details, or runtime files.
