@@ -39,7 +39,7 @@
                 {
                     "title": "Android Auto for CAT",
                     "url": "https://drive.google.com/drive/folders/1NBDiUbSGnkh8rzP9cusv6ClvvjNz8KEG?usp=sharing",
-                    "kind": "tools",
+                    "kind": "guide",
                     "source": "DietDroid",
                     "license": "Not specified",
                     "mirrorUrl": "",
@@ -54,26 +54,7 @@
             "form": "bar",
             "description": "Listed in DietDroid’s phone directory. Its detail page could not be retrieved during this verification.",
             "sourceUrl": "https://dietdroid.com/nokia-800-tough/",
-            "resources": [
-                {
-                    "title": "Install SkyOS",
-                    "url": "https://github.com/AshiVered/SkyOS",
-                    "kind": "guide",
-                    "source": "DietDroid",
-                    "license": "Not specified",
-                    "mirrorUrl": "",
-                    "sha256": ""
-                },
-                {
-                    "title": "SkyOS",
-                    "url": "https://drive.google.com/drive/folders/1woX8mN_vl6wH3-9jKb8wIuKMsJcDT16I",
-                    "kind": "firmware",
-                    "source": "DietDroid",
-                    "license": "Not specified",
-                    "mirrorUrl": "",
-                    "sha256": ""
-                }
-            ]
+            "resources": []
         },
         {
             "id": "nokia-3210-4g",
@@ -122,7 +103,7 @@
                 },
                 {
                     "title": "KEFS MODIFIED",
-                    "url": "https://docs.google.com/document/u/0/d/1906aYesws-N5yRhmyQe1S-81hyrHIhvxvDDOgOPICcw/mobilebasic?urp=gmail_link&pli=1",
+                    "url": "https://docs.google.com/document/u/0/d/1906aYesws-N5yRhmyQe1S-81hyrHIhvxvDDOgOPICcw/mobilebasic?pli=1&urp=gmail_link",
                     "kind": "guide",
                     "source": "DietDroid",
                     "license": "Not specified",
@@ -210,6 +191,15 @@
                     "license": "Not specified",
                     "mirrorUrl": "",
                     "sha256": ""
+                },
+                {
+                    "title": "ROOTED BOOT",
+                    "url": "https://drive.google.com/file/d/140FgqxSrkis8bsb190NQ5AiGZrkFYmzQ/view?usp=sharinghttps%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F140FgqxSrkis8bsb190NQ5AiGZrkFYmzQ%2Fview%3Fusp%3Dsharing",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
                 }
             ]
         },
@@ -251,7 +241,7 @@
                 {
                     "title": "driver_auto_installer_exe_v5.1632.00",
                     "url": "https://drive.google.com/drive/folders/1lJb3asilM84urKb73OOdzzahxCxs30-X?usp=sharing",
-                    "kind": "tools",
+                    "kind": "guide",
                     "source": "DietDroid",
                     "license": "Not specified",
                     "mirrorUrl": "",
@@ -321,6 +311,15 @@
                     "sha256": ""
                 },
                 {
+                    "title": "open_gapps-arm64-11.0-pico-20211217",
+                    "url": "https://drive.google.com/drive/folders/1C1cxM2AnAWwS99vXNk0GYcLinZ897OXY?usp=sharing",
+                    "kind": "guide",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
                     "title": "SP Flash Tool V5",
                     "url": "https://files.dietdroid.com/api/public/dl/N7ZUl9S1/phones/f21_pro/sp_flash_tool_v5/sp_flash_tool_v5.zip",
                     "kind": "tools",
@@ -383,7 +382,7 @@
             "sha256": "7914e9aaac823667c601b1143d2da6f221398c41a8bb63f48a9c9d46dce0d0a2",
             "bytes": 630327,
             "status": "mirrored",
-            "notes": "Android 7.0+. Upstream describes only Vibrate permission. General-purpose software; review suitability with your own provider. License and attribution: downloads/simple-keyboard-149.LICENSE.txt and downloads/simple-keyboard-149.NOTICE.txt. License and attribution: downloads/simple-keyboard-149.LICENSE.txt and downloads/simple-keyboard-149.NOTICE.txt."
+            "notes": "Android 7.0+. Upstream describes only Vibrate permission. General-purpose software; review suitability with your own provider. License and attribution: downloads/simple-keyboard-149.LICENSE.txt and downloads/simple-keyboard-149.NOTICE.txt."
         },
         {
             "id": "fossify-calculator",
@@ -399,10 +398,221 @@
             "bytes": 7047681,
             "status": "official-release",
             "notes": "Official Fossify release. This general-purpose app is not a kosher certification. Redistribution requires the GPL license, notices and corresponding source obligations."
+        },
+        {
+            "id": "cfop-bezeq",
+            "name": "בזק Bezeq",
+            "description": "A CFOP-maintained Android build of בזק Bezeq. Review the source release and device requirements.",
+            "category": "Communication",
+            "repository": "https://github.com/cfopuser/app-store",
+            "license": "Binary rights unverified",
+            "version": "bezeq-v74.1.42",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/bezeq-v74.1.42/bezeq-patched-74.1.42.apk",
+            "sourceArchive": "",
+            "sha256": "",
+            "bytes": 52119888,
+            "status": "community-release",
+            "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
+        },
+        {
+            "id": "cfop-bit",
+            "name": "bit ביט",
+            "description": "A CFOP-maintained Android build of bit ביט. Review the source release and device requirements.",
+            "category": "Finance",
+            "repository": "https://github.com/cfopuser/app-store",
+            "license": "Binary rights unverified",
+            "version": "bit-v6.18",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/bit-v6.18/bit-patched-6.18.apk",
+            "sourceArchive": "",
+            "sha256": "",
+            "bytes": 162468618,
+            "status": "community-release",
+            "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
+        },
+        {
+            "id": "cfop-egg",
+            "name": "egg - Bus & Train in Israel",
+            "description": "A CFOP-maintained Android build of egg - Bus & Train in Israel. Review the source release and device requirements.",
+            "category": "Transportation",
+            "repository": "https://github.com/cfopuser/app-store",
+            "license": "Binary rights unverified",
+            "version": "egg-v10.2.16",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/egg-v10.2.16/egg-patched-10.2.16.apk",
+            "sourceArchive": "",
+            "sha256": "",
+            "bytes": 58038181,
+            "status": "community-release",
+            "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
+        },
+        {
+            "id": "cfop-hopon",
+            "name": "Rav-Pass by HopOn הופאון רב-פס",
+            "description": "A CFOP-maintained Android build of Rav-Pass by HopOn הופאון רב-פס. Review the source release and device requirements.",
+            "category": "Transportation",
+            "repository": "https://github.com/cfopuser/app-store",
+            "license": "Binary rights unverified",
+            "version": "hopon-v10.2.24",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/hopon-v10.2.24/hopon-patched-10.2.24.apk",
+            "sourceArchive": "",
+            "sha256": "",
+            "bytes": 60507346,
+            "status": "community-release",
+            "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
+        },
+        {
+            "id": "cfop-meld",
+            "name": "Meld",
+            "description": "A CFOP-maintained Android build of Meld. Review the source release and device requirements.",
+            "category": "Music & Audio",
+            "repository": "https://github.com/cfopuser/app-store",
+            "license": "Binary rights unverified",
+            "version": "meld-v0.8.9",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/meld-v0.8.9/meld-patched-0.8.9.apk",
+            "sourceArchive": "",
+            "sha256": "",
+            "bytes": 64916180,
+            "status": "community-release",
+            "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
+        },
+        {
+            "id": "cfop-metrolist",
+            "name": "MetroList",
+            "description": "A CFOP-maintained Android build of MetroList. Review the source release and device requirements.",
+            "category": "Music & Audio",
+            "repository": "https://github.com/cfopuser/app-store",
+            "license": "Binary rights unverified",
+            "version": "metrolist-v13.7.0",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/metrolist-v13.7.0/metrolist-patched-13.7.0.apk",
+            "sourceArchive": "",
+            "sha256": "",
+            "bytes": 27343115,
+            "status": "community-release",
+            "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
+        },
+        {
+            "id": "cfop-mizrahi",
+            "name": "מזרחי טפחות - ניהול חשבון",
+            "description": "A CFOP-maintained Android build of מזרחי טפחות - ניהול חשבון. Review the source release and device requirements.",
+            "category": "Finance",
+            "repository": "https://github.com/cfopuser/app-store",
+            "license": "Binary rights unverified",
+            "version": "mizrahi-v45.0",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/mizrahi-v45.0/mizrahi-patched-45.0.apk",
+            "sourceArchive": "",
+            "sha256": "",
+            "bytes": 98802338,
+            "status": "community-release",
+            "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
+        },
+        {
+            "id": "cfop-osmand",
+            "name": "OsmAnd+",
+            "description": "A CFOP-maintained Android build of OsmAnd+. Review the source release and device requirements.",
+            "category": "Transportation",
+            "repository": "https://github.com/cfopuser/app-store",
+            "license": "Binary rights unverified",
+            "version": "osmand-v5.4.0",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/osmand-v5.4.0/osmand-patched-5.4.0.apk",
+            "sourceArchive": "",
+            "sha256": "",
+            "bytes": 498501365,
+            "status": "community-release",
+            "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
+        },
+        {
+            "id": "cfop-sealplus",
+            "name": "SealPlus",
+            "description": "A CFOP-maintained Android build of SealPlus. Review the source release and device requirements.",
+            "category": "Tools",
+            "repository": "https://github.com/cfopuser/app-store",
+            "license": "Binary rights unverified",
+            "version": "sealplus-v3.1.0",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/sealplus-v3.1.0/sealplus-patched-3.1.0.apk",
+            "sourceArchive": "",
+            "sha256": "",
+            "bytes": 226623329,
+            "status": "community-release",
+            "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
+        },
+        {
+            "id": "cfop-spotify",
+            "name": "Spotify: Music and Podcasts",
+            "description": "A CFOP-maintained Android build of Spotify: Music and Podcasts. Review the source release and device requirements.",
+            "category": "Music & Audio",
+            "repository": "https://github.com/cfopuser/app-store",
+            "license": "Binary rights unverified",
+            "version": "spotify-v9.1.94.1929",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/spotify-v9.1.94.1929/spotify-patched-9.1.94.1929.apk",
+            "sourceArchive": "",
+            "sha256": "",
+            "bytes": 109859603,
+            "status": "community-release",
+            "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
+        },
+        {
+            "id": "cfop-termux",
+            "name": "Termux",
+            "description": "A CFOP-maintained Android build of Termux. Review the source release and device requirements.",
+            "category": "Tools",
+            "repository": "https://github.com/cfopuser/app-store",
+            "license": "Binary rights unverified",
+            "version": "termux-v0.118.3",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/termux-v0.118.3/termux-patched-0.118.3.apk",
+            "sourceArchive": "",
+            "sha256": "",
+            "bytes": 157217086,
+            "status": "community-release",
+            "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
+        },
+        {
+            "id": "cfop-waze",
+            "name": "Waze Navigation & Live Traffic",
+            "description": "A CFOP-maintained Android build of Waze Navigation & Live Traffic. Review the source release and device requirements.",
+            "category": "Transportation",
+            "repository": "https://github.com/cfopuser/app-store",
+            "license": "Binary rights unverified",
+            "version": "waze-v4.100.1.0",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/waze-v4.100.1.0/waze-patched-4.100.1.0.apk",
+            "sourceArchive": "",
+            "sha256": "",
+            "bytes": 88919361,
+            "status": "community-release",
+            "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
+        },
+        {
+            "id": "cfop-whatsapp",
+            "name": "WhatsApp Messenger",
+            "description": "A CFOP-maintained Android build of WhatsApp Messenger. Review the source release and device requirements.",
+            "category": "Communication",
+            "repository": "https://github.com/cfopuser/app-store",
+            "license": "Binary rights unverified",
+            "version": "whatsapp-v2.26.38.73",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/whatsapp-v2.26.38.73/whatsapp-patched-2.26.38.73.apk",
+            "sourceArchive": "",
+            "sha256": "",
+            "bytes": 116092724,
+            "status": "community-release",
+            "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
+        },
+        {
+            "id": "cfop-yahav",
+            "name": "בנק יהב - ניהול חשבון",
+            "description": "A CFOP-maintained Android build of בנק יהב - ניהול חשבון. Review the source release and device requirements.",
+            "category": "Finance",
+            "repository": "https://github.com/cfopuser/app-store",
+            "license": "Binary rights unverified",
+            "version": "yahav-v1.0.175",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/yahav-v1.0.175/yahav-patched-1.0.175.apk",
+            "sourceArchive": "",
+            "sha256": "",
+            "bytes": 159734209,
+            "status": "community-release",
+            "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
         }
     ],
     "notices": [
         "Device resource metadata is attributed to DietDroid. Binary redistribution permissions are not established for firmware references.",
-        "The Shalom Karr demo contains mock app listings and no APK downloads; these are not imported as real apps."
+        "The Shalom Karr demo contains mock app listings and no APK downloads; these are not imported as real apps.",
+        "CFOP community app metadata: cfopuser/app-store, CC-BY-NC-SA-4.0. Third-party APK rights are separate and unverified."
     ]
 }

@@ -41,3 +41,7 @@ The coffee label is present, but no payment destination has been invented. It op
 ## Security and privacy
 
 Do not commit credentials, personal contact details, local runtime files, or private user submissions. No account or cookie is needed on the site. External GitHub issue submission follows GitHub's own account rules. CI source imports are allowlisted; APKs are never executed during ingestion. Download checksums identify files, not safety or religious suitability.
+
+## CFOP catalog
+
+Includes 14 factual app records from cfopuser/app-store, credited under its CC-BY-NC-SA-4.0 catalog license. This dataset has a separate license from the MIT application code. Patched builds are clearly labeled as community builds and are linked to their original release, not claimed as official publisher APKs or mirrored without redistribution rights. The Kotlin importer refreshes the CFOP JSON index automatically.

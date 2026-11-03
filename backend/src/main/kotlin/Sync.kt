@@ -46,6 +46,6 @@ fun syncCatalog(){
   successes++
   if(app.status=="mirrored"&&app.version==tag)app else app.copy(version=tag,downloadUrl=asset["browser_download_url"]!!.jsonPrimitive.content,sourceArchive="https://github.com/${source.repository}/archive/refs/tags/$tag.tar.gz",sha256=digest,bytes=asset["size"]!!.jsonPrimitive.long,status="official-release")
  }catch(e:Exception){println("Keeping last known release for ${app.id}: ${e.message}");app}}
- val updated=previous.copy(updated=if(successes>0)LocalDate.now().toString()else previous.updated,devices=devices,apps=apps)
+ val updated=mergeCfop(previous.copy(updated=if(successes>0)LocalDate.now().toString()else previous.updated,devices=devices,apps=apps))
  File("data/catalog.json").writeText(catalogJson.encodeToString(Catalog.serializer(),updated));println("Checked ${devices.size} devices and ${apps.size} apps; $successes sources refreshed.")
 }
