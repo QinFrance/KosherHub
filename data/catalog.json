@@ -346,6 +346,141 @@
                     "license": "Not specified",
                     "mirrorUrl": "",
                     "sha256": ""
+                },
+                {
+                    "title": "Drivers.zip",
+                    "url": "https://github.com/Noochtech/awesome-qin-f21-pro/releases/download/tools/Drivers.zip",
+                    "kind": "tools",
+                    "source": "Noochtech/awesome-qin-f21-pro",
+                    "license": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+                    "mirrorUrl": "https://github.com/QinFrance/KosherHub/releases/download/mirror-noochtech-awesome-qin-f21-pro-tools-177e236a3a6f/370371817--Drivers.zip",
+                    "sha256": "160a760fd7b6ede492384663dda63cca5cac43ba85a998b2ef4a5ab5cf42709f"
+                },
+                {
+                    "title": "SN.Write.Tool.zip",
+                    "url": "https://github.com/Noochtech/awesome-qin-f21-pro/releases/download/tools/SN.Write.Tool.zip",
+                    "kind": "tools",
+                    "source": "Noochtech/awesome-qin-f21-pro",
+                    "license": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+                    "mirrorUrl": "https://github.com/QinFrance/KosherHub/releases/download/mirror-noochtech-awesome-qin-f21-pro-tools-177e236a3a6f/374738671--SN.Write.Tool.zip",
+                    "sha256": "799e9949ccc14df58bdc8e43f2647276a224d2164aa23eb626c1471e2f26c157"
+                },
+                {
+                    "title": "SP_Flash_Tool_V5.zip",
+                    "url": "https://github.com/Noochtech/awesome-qin-f21-pro/releases/download/tools/SP_Flash_Tool_V5.zip",
+                    "kind": "tools",
+                    "source": "Noochtech/awesome-qin-f21-pro",
+                    "license": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+                    "mirrorUrl": "https://github.com/QinFrance/KosherHub/releases/download/mirror-noochtech-awesome-qin-f21-pro-tools-177e236a3a6f/369882011--SP_Flash_Tool_V5.zip",
+                    "sha256": "78088615876be88c304f27460935a6edacc1eb8c50ce98f0c1c28387778a3e2c"
+                },
+                {
+                    "title": "autobooter.exe",
+                    "url": "https://github.com/Noochtech/awesome-qin-f21-pro/releases/download/tools/autobooter.exe",
+                    "kind": "tools",
+                    "source": "Noochtech/awesome-qin-f21-pro",
+                    "license": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+                    "mirrorUrl": "https://github.com/QinFrance/KosherHub/releases/download/mirror-noochtech-awesome-qin-f21-pro-tools-177e236a3a6f/369847177--autobooter.exe",
+                    "sha256": "c64505a913102609d4c369bdd18e90d1587a65496c6ac864f8b7cfc0c474f662"
+                },
+                {
+                    "title": "v1-F21-USA-6.1.3-ROOTED_INTEGRITY_TWEAKS.rar",
+                    "url": "https://github.com/Noochtech/awesome-qin-f21-pro/releases/download/v1_Original_F21_Pro/v1-F21-USA-6.1.3-ROOTED_INTEGRITY_TWEAKS.rar",
+                    "kind": "firmware",
+                    "source": "Noochtech/awesome-qin-f21-pro",
+                    "license": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+                    "mirrorUrl": "https://github.com/QinFrance/KosherHub/releases/download/mirror-noochtech-awesome-qin-f21-pro-v1_Original_F21_Pro-77d7463833f0/332259725--v1-F21-USA-6.1.3-ROOTED_INTEGRITY_TWEAKS.rar",
+                    "sha256": "6987133b24b337614ffb293b6977d83f9d9ab9d2841ac7bb709b53a97d03948b"
+                },
+                {
+                    "title": "v1-f21_a.i.v._kosher.rar",
+                    "url": "https://github.com/Noochtech/awesome-qin-f21-pro/releases/download/v1_Original_F21_Pro/v1-f21_a.i.v._kosher.rar",
+                    "kind": "firmware",
+                    "source": "Noochtech/awesome-qin-f21-pro",
+                    "license": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+                    "mirrorUrl": "https://github.com/QinFrance/KosherHub/releases/download/mirror-noochtech-awesome-qin-f21-pro-v1_Original_F21_Pro-77d7463833f0/332260368--v1-f21_a.i.v._kosher.rar",
+                    "sha256": "e50b4ec00340dd35290b296466f97c364db443aeff4d8d8646288cf0936dac4f"
+                },
+                {
+                    "title": "v1-f21_f21-pro_1.1.1_tripleu-edition.rar",
+                    "url": "https://github.com/Noochtech/awesome-qin-f21-pro/releases/download/v1_Original_F21_Pro/v1-f21_f21-pro_1.1.1_tripleu-edition.rar",
+                    "kind": "firmware",
+                    "source": "Noochtech/awesome-qin-f21-pro",
+                    "license": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+                    "mirrorUrl": "https://github.com/QinFrance/KosherHub/releases/download/mirror-noochtech-awesome-qin-f21-pro-v1_Original_F21_Pro-77d7463833f0/332262808--v1-f21_f21-pro_1.1.1_tripleu-edition.rar",
+                    "sha256": "8fc8552277d9a1b16739e9d6bdd7ff799df80027af23087d276600c27491ee33"
+                },
+                {
+                    "title": "v1-f21_pro_1.1.1.rar",
+                    "url": "https://github.com/Noochtech/awesome-qin-f21-pro/releases/download/v1_Original_F21_Pro/v1-f21_pro_1.1.1.rar",
+                    "kind": "firmware",
+                    "source": "Noochtech/awesome-qin-f21-pro",
+                    "license": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+                    "mirrorUrl": "https://github.com/QinFrance/KosherHub/releases/download/mirror-noochtech-awesome-qin-f21-pro-v1_Original_F21_Pro-77d7463833f0/332264364--v1-f21_pro_1.1.1.rar",
+                    "sha256": "8c7ddc21a9da92eb97564cbca8814985fc29384d29039b32cf51a24fa0b20075"
+                },
+                {
+                    "title": "v1-spflash-f21pro-restore-1.0.8.rar",
+                    "url": "https://github.com/Noochtech/awesome-qin-f21-pro/releases/download/v1_Original_F21_Pro/v1-spflash-f21pro-restore-1.0.8.rar",
+                    "kind": "firmware",
+                    "source": "Noochtech/awesome-qin-f21-pro",
+                    "license": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+                    "mirrorUrl": "https://github.com/QinFrance/KosherHub/releases/download/mirror-noochtech-awesome-qin-f21-pro-v1_Original_F21_Pro-77d7463833f0/332255513--v1-spflash-f21pro-restore-1.0.8.rar",
+                    "sha256": "20577076943efcab62a26a05a7e5de3700b147bdc631284a15b1d7a08aeb1997"
+                },
+                {
+                    "title": "v1-super_only_f21pro_global_.google.multilanguage.rar",
+                    "url": "https://github.com/Noochtech/awesome-qin-f21-pro/releases/download/v1_Original_F21_Pro/v1-super_only_f21pro_global_.google.multilanguage.rar",
+                    "kind": "firmware",
+                    "source": "Noochtech/awesome-qin-f21-pro",
+                    "license": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+                    "mirrorUrl": "https://github.com/QinFrance/KosherHub/releases/download/mirror-noochtech-awesome-qin-f21-pro-v1_Original_F21_Pro-77d7463833f0/332260026--v1-super_only_f21pro_global_.google.multilanguage.rar",
+                    "sha256": "07d4c7e4448b8cef495a25d33f755b650c30fbe4b37656efe6cdf8dc072cad8c"
+                },
+                {
+                    "title": "v2-F21-USA-6.1.3-ROOTED_INTEGRITY_TWEAKS.rar",
+                    "url": "https://github.com/Noochtech/awesome-qin-f21-pro/releases/download/v2/v2-F21-USA-6.1.3-ROOTED_INTEGRITY_TWEAKS.rar",
+                    "kind": "firmware",
+                    "source": "Noochtech/awesome-qin-f21-pro",
+                    "license": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+                    "mirrorUrl": "https://github.com/QinFrance/KosherHub/releases/download/mirror-noochtech-awesome-qin-f21-pro-v2-6dcd1656c7c3/406102667--v2-F21-USA-6.1.3-ROOTED_INTEGRITY_TWEAKS.rar",
+                    "sha256": "ccb9d04cbfade15be5f0b403630be8b3a415218128ae8be5c70a8134c7f1f991"
+                },
+                {
+                    "title": "3.0.2.Gapps.7z",
+                    "url": "https://github.com/Noochtech/awesome-qin-f21-pro/releases/download/v3/3.0.2.Gapps.7z",
+                    "kind": "firmware",
+                    "source": "Noochtech/awesome-qin-f21-pro",
+                    "license": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+                    "mirrorUrl": "https://github.com/QinFrance/KosherHub/releases/download/mirror-noochtech-awesome-qin-f21-pro-v3-4999d6476de4/371726265--3.0.2.Gapps.7z",
+                    "sha256": "f007dac1a9029836be674be68f6f4471075b43ceefe42fc8aa0fe7a335709850"
+                },
+                {
+                    "title": "3.0.2.Patched.7z",
+                    "url": "https://github.com/Noochtech/awesome-qin-f21-pro/releases/download/v3/3.0.2.Patched.7z",
+                    "kind": "firmware",
+                    "source": "Noochtech/awesome-qin-f21-pro",
+                    "license": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+                    "mirrorUrl": "https://github.com/QinFrance/KosherHub/releases/download/mirror-noochtech-awesome-qin-f21-pro-v3-4999d6476de4/375883459--3.0.2.Patched.7z",
+                    "sha256": "f3291f96fb03c8b6993cb51a6c8aa8d2229421df7c87e5c5e0cdceb5e111250b"
+                },
+                {
+                    "title": "3.0.2.Stock.7z",
+                    "url": "https://github.com/Noochtech/awesome-qin-f21-pro/releases/download/v3/3.0.2.Stock.7z",
+                    "kind": "firmware",
+                    "source": "Noochtech/awesome-qin-f21-pro",
+                    "license": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+                    "mirrorUrl": "https://github.com/QinFrance/KosherHub/releases/download/mirror-noochtech-awesome-qin-f21-pro-v3-4999d6476de4/375885192--3.0.2.Stock.7z",
+                    "sha256": "c9ad8cf47592dd413334250ca5926b48fbeed2e0eefeed274d76e1dbf4d97a2d"
+                },
+                {
+                    "title": "twrp_boot.img",
+                    "url": "https://github.com/Noochtech/awesome-qin-f21-pro/releases/download/v3/twrp_boot.img",
+                    "kind": "firmware",
+                    "source": "Noochtech/awesome-qin-f21-pro",
+                    "license": "Unmodified upstream Qin F21 Pro release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
+                    "mirrorUrl": "https://github.com/QinFrance/KosherHub/releases/download/mirror-noochtech-awesome-qin-f21-pro-v3-4999d6476de4/332853480--twrp_boot.img",
+                    "sha256": "8fe963505fadc5579f0d180c0f83defb8adbfbd500473b7eb9e9a4904a681f03"
                 }
             ]
         },
