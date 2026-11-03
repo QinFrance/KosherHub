@@ -3,6 +3,24 @@ import java.nio.file.Files
 import kotlin.test.*
 
 class ReleaseMirrorTest {
+    @Test fun targetCredentialsNeverFollowPublicUpstreamMetadataReads() {
+        assertFalse(releaseApiUsesToken("/repos/alltechdev/DietDroid/releases?per_page=100&page=1"))
+        assertFalse(releaseApiUsesToken("/repos/Noochtech/awesome-qin-f21-pro/releases/123/assets"))
+        assertTrue(releaseApiUsesToken("/repos/QinFrance/KosherHub/releases"))
+        assertTrue(releaseApiUsesToken("/repos/QinFrance/KosherHub/releases/123/assets"))
+        assertFailsWith<IllegalArgumentException> { releaseApiUsesToken("/repos/other/unapproved/releases") }
+        assertFailsWith<IllegalArgumentException> { releaseApiUsesToken("/repos/QinFrance/KosherHub-evil/releases") }
+    }
+
+    @Test fun incompleteSourceStatusRetainsVerifiedMirrorsInTheSerializedIndex() {
+        val failure = "alltechdev/DietDroid: source is not publicly accessible (HTTP 404)"
+        val index = FirmwareMirrorIndex(updated = "2026-11-03T00:00:00Z", status = "incomplete", failures = listOf(failure))
+        val restored = catalogJson.decodeFromString<FirmwareMirrorIndex>(catalogJson.encodeToString(FirmwareMirrorIndex.serializer(), index))
+        assertEquals("incomplete", restored.status)
+        assertEquals(listOf(failure), restored.failures)
+        assertEquals(index.assets, restored.assets)
+    }
+
     @Test fun releaseNamesAreStableScopedAndCollisionResistant() {
         val tag = mirroredReleaseTag("alltechdev/DietDroid", "v1/../../test")
         assertTrue(Regex("[A-Za-z0-9._-]+").matches(tag))

@@ -3,6 +3,22 @@ import java.util.Base64
 import kotlin.test.*
 
 class AppIssueTest {
+    @Test fun workflowTokenOnlyAuthenticatesTargetRepositoryWrites() {
+        val repository = "QinFrance/KosherHub"
+        for (path in listOf("repos/FossifyOrg/Calculator/releases/latest", "repos/cfopuser/app-store", "repos/$repository/contents/data/catalog.json?ref=main")) {
+            val request = githubIssueHttpRequest("test-token", repository, path, "GET", null)
+            assertEquals("api.github.com", request.uri().host)
+            assertTrue(request.headers().firstValue("Authorization").isEmpty)
+        }
+        for (method in listOf("POST", "PATCH")) {
+            val request = githubIssueHttpRequest("test-token", repository, "repos/$repository/git/refs", method, JsonObject(emptyMap()))
+            assertEquals("Bearer test-token", request.headers().firstValue("Authorization").orElse(null))
+        }
+        for (path in listOf("repos/other/repo/git/refs", "repos/QinFrance/KosherHub-extra/git/refs", "repos/QinFrance/KosherHub%2Fother/git/refs")) {
+            assertFailsWith<IllegalArgumentException> { githubIssueHttpRequest("test-token", repository, path, "POST", JsonObject(emptyMap())) }
+        }
+    }
+
     @Test fun acceptsOnlyTheExactGitHubRepositoryField() {
         assertEquals("owner/app", appIssueUpstream("### Upstream repository\n\nhttps://github.com/owner/app/\n\n### Why\nUseful"))
         for (input in listOf(

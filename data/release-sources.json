@@ -1,7 +1,7 @@
 [
   {
     "repository": "alltechdev/DietDroid",
-    "permission": "Public release mirroring was requested by the KosherHub maintainer after receiving the DietDroid creator's authorization to rehost these resources.",
+    "permission": "Release mirroring was requested by the KosherHub maintainer after receiving the DietDroid creator's authorization to rehost these resources. This source must be publicly accessible for the automatic mirror; the target repository token does not grant access to private source releases.",
     "notice": "Unmodified upstream release asset. Original authorship, licenses, embedded notices, and device-specific requirements remain applicable. Source provenance and SHA-256 are retained; no kosher certification is asserted.",
     "deviceRules": [
       { "releaseTagPrefix": "tcl-flip2-", "deviceId": "tcl-flip-2" },

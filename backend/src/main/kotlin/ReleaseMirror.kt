@@ -20,6 +20,13 @@ internal const val MAX_RELEASE_ASSET_BYTES = 2_147_483_647L
 private val releaseRepositories = setOf("alltechdev/DietDroid", "Noochtech/awesome-qin-f21-pro")
 private val downloadHosts = setOf("github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com", "github-releases.githubusercontent.com")
 
+/** The Actions installation token is scoped to the target repository; public sources need no credential. */
+internal fun releaseApiUsesToken(path: String): Boolean {
+    val target = path.startsWith("/repos/$MIRROR_REPOSITORY/")
+    require(target || releaseRepositories.any { path.startsWith("/repos/$it/") }) { "Release API repository is not approved" }
+    return target
+}
+
 @Serializable data class ReleaseDeviceRule(val releaseTagPrefix: String, val deviceId: String)
 @Serializable data class ReleaseSource(
     val repository: String,
@@ -49,7 +56,9 @@ private val downloadHosts = setOf("github.com", "release-assets.githubuserconten
 @Serializable data class FirmwareMirrorIndex(
     val updated: String = "",
     val repository: String = MIRROR_REPOSITORY,
-    val assets: List<FirmwareMirror> = emptyList()
+    val assets: List<FirmwareMirror> = emptyList(),
+    val status: String = "partial",
+    val failures: List<String> = emptyList()
 )
 internal data class ReleaseAsset(
     val id: Long, val name: String, val url: String, val size: Long,
@@ -153,13 +162,14 @@ private class ReleaseGitHub(private val token: String) {
 
     fun api(path: String, body: JsonObject? = null, missingAllowed: Boolean = false): JsonElement? {
         require(path.startsWith("/repos/") && !path.contains("..") && !path.contains('#'))
-        val request = builder(URI("https://api.github.com$path"), true).header("Accept", "application/vnd.github+json")
+        // Public upstream metadata is deliberately anonymous; the ephemeral token is target-repository scoped.
+        val request = builder(URI("https://api.github.com$path"), releaseApiUsesToken(path)).header("Accept", "application/vnd.github+json")
         if (body == null) request.GET() else request.header("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
         val response = client.send(request.build(), HttpResponse.BodyHandlers.ofInputStream())
         response.body().use { input ->
             if (response.statusCode() == 404 && missingAllowed) return null
-            require(response.statusCode() in 200..299) { "GitHub API returned HTTP ${response.statusCode()}" }
+            require(response.statusCode() in 200..299) { "GitHub API returned HTTP ${response.statusCode()} for ${path.substringBefore('?')}" }
             val bytes = input.readNBytes(12_000_001)
             require(bytes.size <= 12_000_000) { "GitHub metadata is too large" }
             return catalogJson.parseToJsonElement(bytes.decodeToString())
@@ -256,20 +266,28 @@ fun mirrorReleaseAssets() {
     require(previous.repository == MIRROR_REPOSITORY)
     val mirrors = previous.assets.associateBy { it.sourceRepository to it.sourceAssetId }.toMutableMap()
     val failures = mutableListOf<String>()
-    fun checkpoint() {
-        val index = FirmwareMirrorIndex(Instant.now().toString(), assets = mirrors.values.sortedWith(compareBy({ it.sourceRepository }, { it.sourceReleaseTag }, { it.sourceAssetName })))
+    fun checkpoint(final: Boolean = false) {
+        val index = FirmwareMirrorIndex(Instant.now().toString(), assets = mirrors.values.sortedWith(compareBy({ it.sourceRepository }, { it.sourceReleaseTag }, { it.sourceAssetName })),
+            status = if (failures.isNotEmpty()) "incomplete" else if (final) "complete" else "partial", failures = failures.toList())
         val temporary = File(indexFile.parentFile, "firmware-mirrors.json.tmp")
         temporary.writeText(catalogJson.encodeToString(FirmwareMirrorIndex.serializer(), index))
         Files.move(temporary.toPath(), indexFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING)
     }
     for (source in sources) {
-        val releases = github.pages("/repos/${source.repository}/releases")
-            .filter { it["draft"]?.jsonPrimitive?.booleanOrNull != true }
-            .map { value ->
-                val id = value["id"]!!.jsonPrimitive.long
-                val assets = github.pages("/repos/${source.repository}/releases/$id/assets").map(::assetFromJson)
-                PublicRelease(id, value.string("tag_name"), value.string("html_url"), assets)
-            }
+        val releases = try {
+            github.pages("/repos/${source.repository}/releases")
+                .filter { it["draft"]?.jsonPrimitive?.booleanOrNull != true }
+                .map { value ->
+                    val id = value["id"]!!.jsonPrimitive.long
+                    val assets = github.pages("/repos/${source.repository}/releases/$id/assets").map(::assetFromJson)
+                    PublicRelease(id, value.string("tag_name"), value.string("html_url"), assets)
+                }
+        } catch (error: Exception) {
+            val description = "${source.repository}: release metadata is not publicly accessible (${error.message})"
+            failures += description
+            System.err.println("Source not mirrored: $description. Continuing other approved sources.")
+            continue
+        }
         println("Checking ${source.repository}: ${releases.size} public releases, ${releases.sumOf { it.assets.size }} assets")
         for (release in releases) {
             if (release.assets.isEmpty()) continue
@@ -328,7 +346,7 @@ fun mirrorReleaseAssets() {
             }
         }
     }
-    checkpoint()
+    checkpoint(final = true)
     require(failures.isEmpty()) { "${failures.size} release assets need review; verified mirrors were checkpointed. No existing assets were overwritten." }
     println("Verified ${mirrors.size} hosted firmware assets with SHA-256 provenance.")
 }

@@ -14,7 +14,7 @@ fun request(url:String,limit:Int=4_000_000):ByteArray {
     val uri=URI(url);require(uri.scheme=="https"&&uri.userInfo==null){"Only public HTTPS sources are accepted"}
     require(uri.host in setOf("dietdroid.com","api.github.com","github.com","raw.githubusercontent.com","codeload.github.com","f-droid.org")){"Source host is not allowlisted"}
     val builder=HttpRequest.newBuilder(uri).timeout(Duration.ofSeconds(90)).header("User-Agent","KosherHub-catalog/1.0 (https://github.com/QinFrance/KosherHub)")
-    if(uri.host=="api.github.com")System.getenv("GITHUB_TOKEN")?.let{builder.header("Authorization","Bearer $it")}
+    // Public source GETs must stay anonymous: Actions tokens are scoped to this repository.
     val future=http.sendAsync(builder.GET().build(),HttpResponse.BodyHandlers.ofByteArray())
     val response=try{future.orTimeout(30,java.util.concurrent.TimeUnit.SECONDS).join()}catch(e:Exception){future.cancel(true);throw IllegalStateException("Source request timed out or failed",e)}
     require(response.statusCode()==200){"Source returned HTTP ${response.statusCode()}"}

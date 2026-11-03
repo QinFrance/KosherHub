@@ -23,21 +23,32 @@ internal interface AppIssueApi {
 
 internal class GitHubApiFailure(val status: Int) : IllegalStateException("GitHub request returned $status")
 
-private class GitHubAppIssueApi(private val token: String) : AppIssueApi {
+internal fun githubIssueHttpRequest(token: String, repository: String, path: String, method: String, body: JsonObject?): HttpRequest {
+    require(repositoryName.matches(repository))
+    require(path.startsWith("repos/") && !path.contains("..") && !path.contains('#'))
+    require(method in setOf("GET", "POST", "PATCH"))
+    val uri = URI("https://api.github.com/$path")
+    require(uri.scheme == "https" && uri.host == "api.github.com" && uri.userInfo == null && uri.port == -1)
+    val builder = HttpRequest.newBuilder(uri).timeout(Duration.ofSeconds(30))
+        .header("Accept", "application/vnd.github+json")
+        .header("X-GitHub-Api-Version", "2022-11-28")
+        .header("Content-Type", "application/json")
+    if (method != "GET") {
+        require(uri.rawPath.startsWith("/repos/$repository/", ignoreCase = true)) { "Writes may only target the workflow repository" }
+        require(token.isNotBlank())
+        builder.header("Authorization", "Bearer $token")
+    }
+    // Public metadata GETs are anonymous even when a repository-scoped workflow token is present.
+    return builder.method(method, body?.let { HttpRequest.BodyPublishers.ofString(it.toString()) }
+        ?: HttpRequest.BodyPublishers.noBody()).build()
+}
+
+private class GitHubAppIssueApi(private val token: String, private val repository: String) : AppIssueApi {
     private val client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(15))
         .followRedirects(HttpClient.Redirect.NEVER).build()
 
     override fun request(path: String, method: String, body: JsonObject?): JsonObject {
-        require(path.startsWith("repos/") && !path.contains("..") && !path.contains('#'))
-        val uri = URI("https://api.github.com/$path")
-        require(uri.scheme == "https" && uri.host == "api.github.com" && uri.userInfo == null)
-        val request = HttpRequest.newBuilder(uri).timeout(Duration.ofSeconds(30))
-            .header("Authorization", "Bearer $token")
-            .header("Accept", "application/vnd.github+json")
-            .header("X-GitHub-Api-Version", "2022-11-28")
-            .header("Content-Type", "application/json")
-            .method(method, body?.let { HttpRequest.BodyPublishers.ofString(it.toString()) }
-                ?: HttpRequest.BodyPublishers.noBody()).build()
+        val request = githubIssueHttpRequest(token, repository, path, method, body)
         val response = client.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8))
         if (response.statusCode() !in 200..299) throw GitHubApiFailure(response.statusCode())
         require(response.body().length <= 8_000_000) { "GitHub response is too large" }
@@ -153,5 +164,6 @@ internal fun validateAppIssue(event: JsonObject, repository: String, api: AppIss
 
 fun main() {
     val event = catalogJson.parseToJsonElement(File(requireNotNull(System.getenv("GITHUB_EVENT_PATH"))).readText()).jsonObject
-    validateAppIssue(event, requireNotNull(System.getenv("GITHUB_REPOSITORY")), GitHubAppIssueApi(requireNotNull(System.getenv("GITHUB_TOKEN"))))
+    val repository = requireNotNull(System.getenv("GITHUB_REPOSITORY"))
+    validateAppIssue(event, repository, GitHubAppIssueApi(requireNotNull(System.getenv("GITHUB_TOKEN")), repository))
 }
