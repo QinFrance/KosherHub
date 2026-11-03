@@ -1,0 +1,9 @@
+Simple Keyboard
+Upstream: https://github.com/rkkr/simple-keyboard
+Version: 149
+Simple Keyboard by Raimondas Rimkus and contributors; derived from AOSP LatinIME, Copyright The Android Open Source Project. Original in-APK notices and signatures are retained.
+License: Apache-2.0
+Unmodified upstream APK, redistributed by KosherHub.
+No kosher certification is asserted.
+Source: https://github.com/rkkr/simple-keyboard/tree/149
+SHA-256: 7914e9aaac823667c601b1143d2da6f221398c41a8bb63f48a9c9d46dce0d0a2

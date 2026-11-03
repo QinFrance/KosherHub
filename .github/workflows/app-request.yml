@@ -1,0 +1,23 @@
+name: Validate app issue
+on:
+  issues:
+    types: [opened, edited]
+permissions:
+  contents: read
+jobs:
+  validate:
+    if: startsWith(github.event.issue.title, '[App]')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate upstream metadata and prepare review
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node tools/validate-app-issue.mjs

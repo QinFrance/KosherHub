@@ -1,0 +1,19 @@
+[
+  {
+    "id": "simple-keyboard",
+    "repository": "rkkr/simple-keyboard",
+    "license": "Apache-2.0",
+    "assetPattern": "app-release\\.apk",
+    "mirrorApproved": true,
+    "attribution": "Simple Keyboard by Raimondas Rimkus and contributors; derived from AOSP LatinIME, Copyright The Android Open Source Project. Original in-APK notices and signatures are retained.",
+    "assetName": "app-release.apk"
+  },
+  {
+    "id": "fossify-calculator",
+    "repository": "FossifyOrg/Calculator",
+    "license": "GPL-3.0",
+    "assetPattern": ".*foss-release\\.apk",
+    "mirrorApproved": false,
+    "attribution": "Fossify and contributors. Binary mirroring awaits complete corresponding-source review."
+  }
+]

@@ -1,0 +1,407 @@
+{
+    "updated": "2026-11-03",
+    "devices": [
+        {
+            "id": "cat-s22-flip",
+            "name": "CAT S22 Flip",
+            "brand": "CAT",
+            "form": "flip",
+            "description": "Rugged Android flip phone. DietDroid documents Android 11 Go, Snapdragon 215, 2 GB RAM, 16 GB storage, and a removable 2,000 mAh battery.",
+            "sourceUrl": "https://dietdroid.com/cat-s22-flip/",
+            "resources": [
+                {
+                    "title": "Kitty2 ROM Installation",
+                    "url": "https://www.reddit.com/r/dumbphones/comments/1jwc73g/android_auto_for_the_cat_s22_flip_and_guide/",
+                    "kind": "guide",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "Android Auto Magisk Module",
+                    "url": "https://www.reddit.com/r/dumbphones/comments/1jwc73g/android_auto_for_the_cat_s22_flip_and_guide/",
+                    "kind": "guide",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "Kitty2",
+                    "url": "https://drive.google.com/drive/folders/1mozvZ2_hUbkYFHiEFVe9pe1y5Yy5Cpih?usp=sharing",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "Android Auto for CAT",
+                    "url": "https://drive.google.com/drive/folders/1NBDiUbSGnkh8rzP9cusv6ClvvjNz8KEG?usp=sharing",
+                    "kind": "guide",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                }
+            ]
+        },
+        {
+            "id": "nokia-800-tough",
+            "name": "Nokia 800 Tough",
+            "brand": "Nokia",
+            "form": "bar",
+            "description": "Listed in DietDroid’s phone directory. Its detail page could not be retrieved during this verification.",
+            "sourceUrl": "https://dietdroid.com/nokia-800-tough/",
+            "resources": []
+        },
+        {
+            "id": "nokia-3210-4g",
+            "name": "Nokia 3210 4G",
+            "brand": "Nokia",
+            "form": "bar",
+            "description": "A Nokia keypad device with a linked firmware resource and a community guide about cloud apps.",
+            "sourceUrl": "https://dietdroid.com/nokia-3210-4g/",
+            "resources": [
+                {
+                    "title": "GET CLOUD APPS",
+                    "url": "https://www.reddit.com/r/dumbphones/s/qI7iSmGXMO",
+                    "kind": "guide",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "3210",
+                    "url": "https://drive.google.com/file/d/1NCS4ox84aaPP7UerpKnf5vsKMvq3xrhq/view?usp=drivesdk",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                }
+            ]
+        },
+        {
+            "id": "tcl-flip-2",
+            "name": "TCL Flip 2",
+            "brand": "TCL",
+            "form": "flip",
+            "description": "An AOSP flip phone with a MediaTek 6739 processor and a 2.8-inch display. Its resource page collects stock and modified firmware, installation guides, and a boot utility.",
+            "sourceUrl": "https://dietdroid.com/tcl-flip-2/",
+            "resources": [
+                {
+                    "title": "NEUTRONSCOTT",
+                    "url": "https://github.com/neutronscott/flip2/wiki",
+                    "kind": "guide",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "KEFS MODIFIED",
+                    "url": "https://docs.google.com/document/u/0/d/1906aYesws-N5yRhmyQe1S-81hyrHIhvxvDDOgOPICcw/mobilebasic?pli=1&urp=gmail_link",
+                    "kind": "guide",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "U/REBZERA",
+                    "url": "https://dietdroid.com/2025/06/18/tcl-flip-2-debugging-root-apk-installation/",
+                    "kind": "guide",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "STENE.XYZ",
+                    "url": "https://stene.xyz/flip2/",
+                    "kind": "guide",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "STOCK",
+                    "url": "https://drive.google.com/drive/folders/1aD-CGnnIjXBUgScHIWzIXDn7OEhfF86A?usp=sharing",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "KEFS MODIFIED SUPER (SEE GUIDE)",
+                    "url": "https://drive.google.com/drive/folders/10-1uLo_wg402O_eDd6FB3S6h42fpDiOh?usp=sharing",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "Darth ROMS (apps4flip)",
+                    "url": "https://drive.google.com/drive/folders/1G3Y7szyrFDpXfIhyUNieenMXm4qdplvL?usp=sharing",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "Darth ROMS (jtechforums) UPDATED",
+                    "url": "https://drive.google.com/drive/folders/1GFSC4gkKpsAz-rFV14D8zkaKs4BOe1n9?usp=sharing",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "autobooter.exe",
+                    "url": "https://github.com/neutronscott/flip2/releases/download/v2024.06.10b/autobooter.exe",
+                    "kind": "tools",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                }
+            ]
+        },
+        {
+            "id": "tiq-mini-m5",
+            "name": "Tiq M5 Mini",
+            "brand": "TIQ",
+            "form": "touch",
+            "description": "A device entry with separate links for stock firmware and a rooted boot image.",
+            "sourceUrl": "https://dietdroid.com/tiq-mini-m5/",
+            "resources": [
+                {
+                    "title": "STOCK",
+                    "url": "https://drive.google.com/drive/folders/1iuMWFplnKeEpFtwDhP2l2DfGRlk5vF_x?usp=sharing",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "ROOTED BOOT",
+                    "url": "https://drive.google.com/file/d/140FgqxSrkis8bsb190NQ5AiGZrkFYmzQ/view?usp=sharinghttps%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F140FgqxSrkis8bsb190NQ5AiGZrkFYmzQ%2Fview%3Fusp%3Dsharing",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                }
+            ]
+        },
+        {
+            "id": "f21-pro",
+            "name": "Qin F21 Pro",
+            "brand": "DuoQin",
+            "form": "bar",
+            "description": "DietDroid groups device-specific guides, drivers, stock and modified firmware, Google Apps, and MediaTek tools for the Qin F21 Pro.",
+            "sourceUrl": "https://dietdroid.com/f21-pro/",
+            "resources": [
+                {
+                    "title": "Flash US Bands",
+                    "url": "https://xdaforums.com/t/guide-xiaomi-qin-f21-pro-with-us-bands.4579393/",
+                    "kind": "guide",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "Flash 1.1.1 Firmware",
+                    "url": "https://xdaforums.com/t/guide-xiaomi-qin-f21-pro-custom-firmware-root-playstore-certified.4405615/",
+                    "kind": "guide",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "AIKORNSAUCE GITHUB",
+                    "url": "https://github.com/AlikornSause/Notes-on-QIN-F21-PRO/tree/main",
+                    "kind": "guide",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "driver_auto_installer_exe_v5.1632.00",
+                    "url": "https://drive.google.com/drive/folders/1lJb3asilM84urKb73OOdzzahxCxs30-X?usp=sharing",
+                    "kind": "guide",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "STOCK",
+                    "url": "https://drive.google.com/drive/folders/1z2dOAV5y6WkEUfl-qe79maYmrMIQmHjp?usp=drive_link",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "1.1.1",
+                    "url": "https://drive.google.com/drive/folders/1QjKKbXodoZ9jsoERETsBrA6QzRK9RPEq?usp=drive_link",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "F30 Bands",
+                    "url": "https://drive.google.com/drive/folders/1k5-fe2U2YNT0KfNu_XELmiVPmLWAADMd?usp=sharing",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "F21 PRO A.I.V (GOOGLE) PATCHED SERVICES.JAR",
+                    "url": "https://drive.google.com/file/d/1B_Yu8hPqlbN-sQnrRjt77JRrG4bcb5Yj/view?usp=sharing",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "F21 PRO A.I.V (GOOGLE)",
+                    "url": "https://drive.google.com/drive/folders/1ZHz5_J-0mvDG-UGmKbLEROt0gUNdNg-r?usp=sharing",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "F21 PRO A.I.V (KOSHER)",
+                    "url": "https://dietdroid.com/f21-pro-aiv-kosher-rom/",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "1.1.1 TRIPLEU",
+                    "url": "https://drive.google.com/drive/folders/1tUoJ4pix_w_5SfTD_HgCvs-Ww6nxyFcF?usp=sharing",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "open_gapps-arm64-11.0-pico-20211217",
+                    "url": "https://drive.google.com/drive/folders/1C1cxM2AnAWwS99vXNk0GYcLinZ897OXY?usp=sharing",
+                    "kind": "guide",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "SP Flash Tool V5",
+                    "url": "https://files.dietdroid.com/api/public/dl/N7ZUl9S1/phones/f21_pro/sp_flash_tool_v5/sp_flash_tool_v5.zip",
+                    "kind": "tools",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "MTK Client",
+                    "url": "https://dietdroid.com/tools/",
+                    "kind": "tools",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                },
+                {
+                    "title": "SN Write Tool",
+                    "url": "https://dl.dietdroid.com/sn-write-tool",
+                    "kind": "tools",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                }
+            ]
+        },
+        {
+            "id": "f21-pro-plus-unisoc-t310",
+            "name": "Qin F21 Pro Plus (Unisoc T310)",
+            "brand": "DuoQin",
+            "form": "bar",
+            "description": "A separate Qin entry for the Unisoc T310 variant. Its stock-firmware destination returned a 404 during verification.",
+            "sourceUrl": "https://dietdroid.com/f21-pro-plus-unisoc-t310/",
+            "resources": [
+                {
+                    "title": "STOCK",
+                    "url": "https://dietdroid.com/f21-pro-plus-stock-unisoc-t310/",
+                    "kind": "firmware",
+                    "source": "DietDroid",
+                    "license": "Not specified",
+                    "mirrorUrl": "",
+                    "sha256": ""
+                }
+            ]
+        }
+    ],
+    "apps": [
+        {
+            "id": "simple-keyboard",
+            "name": "Simple Keyboard",
+            "description": "A small, ad-free keyboard with the essentials. No GIFs, no emoji, no distractions.",
+            "category": "Keyboard",
+            "repository": "https://github.com/rkkr/simple-keyboard",
+            "license": "Apache-2.0",
+            "version": "149",
+            "downloadUrl": "downloads/simple-keyboard-149.apk",
+            "sourceArchive": "https://github.com/rkkr/simple-keyboard/archive/refs/tags/149.tar.gz",
+            "sha256": "7914e9aaac823667c601b1143d2da6f221398c41a8bb63f48a9c9d46dce0d0a2",
+            "bytes": 630327,
+            "status": "mirrored",
+            "notes": "Android 7.0+. Upstream describes only Vibrate permission. General-purpose software; review suitability with your own provider. License and attribution: downloads/simple-keyboard-149.LICENSE.txt and downloads/simple-keyboard-149.NOTICE.txt."
+        },
+        {
+            "id": "fossify-calculator",
+            "name": "Fossify Calculator",
+            "description": "An open-source calculator for everyday numbers. Simple, offline, and focused.",
+            "category": "Calculator",
+            "repository": "https://github.com/FossifyOrg/Calculator",
+            "license": "GPL-3.0",
+            "version": "1.4.0",
+            "downloadUrl": "https://github.com/FossifyOrg/Calculator/releases/download/1.4.0/calculator-10-foss-release.apk",
+            "sourceArchive": "https://github.com/FossifyOrg/Calculator/archive/refs/tags/1.4.0.tar.gz",
+            "sha256": "7c5443c22d6d62c67dfe80df33ea9161ff0fa440f92590bcb45d7008b57613ed",
+            "bytes": 7047681,
+            "status": "official-release",
+            "notes": "Official Fossify release. This general-purpose app is not a kosher certification. Redistribution requires the GPL license, notices and corresponding source obligations."
+        }
+    ],
+    "notices": [
+        "Device resource metadata is attributed to DietDroid. Binary redistribution permissions are not established for firmware references.",
+        "The Shalom Karr demo contains mock app listings and no APK downloads; these are not imported as real apps."
+    ]
+}

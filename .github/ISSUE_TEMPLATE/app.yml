@@ -1,0 +1,33 @@
+name: Add or update an Android app
+description: Propose a real upstream app or a new release. CI validates the source and prepares a review request.
+title: '[App] '
+body:
+  - type: dropdown
+    id: request
+    attributes:
+      label: Request type
+      options: [Add an app, Update an existing app]
+    validations:
+      required: true
+  - type: input
+    id: repository
+    attributes:
+      label: Upstream repository
+      description: Official public GitHub repository, not an APK attachment or shortened link.
+      placeholder: https://github.com/owner/project
+    validations:
+      required: true
+  - type: textarea
+    id: use
+    attributes:
+      label: Why is it useful?
+      description: Describe purpose, network access, filtering requirements and device compatibility. Do not include personal details or credentials.
+    validations:
+      required: true
+  - type: checkboxes
+    id: rights
+    attributes:
+      label: Source and rights
+      options:
+        - label: I linked the original project and understand that a listing is not kosher certification.
+          required: true

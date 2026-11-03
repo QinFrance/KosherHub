@@ -1,0 +1,11 @@
+name: Say hello, report a bug, or share feedback
+description: Contact the community project without publishing anyone’s private email address.
+title: '[Hello] '
+body:
+  - type: textarea
+    id: message
+    attributes:
+      label: Your message
+      description: This is a public GitHub issue. Do not include private contact details, passwords or other sensitive information.
+    validations:
+      required: true

@@ -1,37 +1,43 @@
 # KosherHub
 
-An MIT-licensed, English-first home for kosher phones, custom ROMs, useful sites, and community knowledge.
+A small community home for phone documentation, Android apps, and ROM resources. English-first, open source, and deliberately personal rather than corporate.
 
-- **Home:** featured selections from the four directories.
-- **Phones, ROMs, Sites, Blog:** searchable pages and resource details.
-- **Submit:** anonymous suggestions for phones, ROMs, sites, articles, topics, and categories.
-- **Studio:** protected content management and a private moderation inbox.
+## Stack
 
-## Community submissions
+- **Frontend:** Kotlin/JS, Jetpack Compose runtime and Compose HTML. Material 3 expressive design tokens, original device SVGs, desktop side rail, and a separately composed mobile experience using light surfaces and bottom navigation. Compose HTML renders accessible DOM elements; Android Material 3 widgets are not falsely presented as DOM widgets.
+- **Backend:** Kotlin/JVM and Ktor, with shared serializable Kotlin catalog models.
+- **Free public deployment:** GitHub Pages serves the compiled Kotlin frontend and a generated JSON API snapshot. It uses no iframe, hosted Sites dependency, account, cookies, trackers, or database credentials.
+- **Live Ktor server:** available through the Dockerfile or `gradle :backend:run`; GitHub Pages cannot run a JVM server continuously. It exposes the same read-only catalog and serves the compiled frontend. No JVM hosting account is silently provisioned.
 
-Visitors can submit a title, description, source link, and optional contact email without an account. Submissions are rate limited and held in a private review queue. Approval creates an editable **draft**, never an automatic public listing. The contact email stays in the private submission record. Public uploads are disabled; ROM contributions use source links. Administrators can upload files up to 50 MB through Studio; larger files can use external URLs.
+## Build and run
 
-## Backend and authentication
+Use Java 21 and Gradle 8.14.3:
 
-Vinext on Cloudflare Workers, Cloudflare D1, and R2. Schema and append-only migrations are in `db/` and `drizzle/`. Email sign-in uses an 8-digit, single-use code valid for 10 minutes with at most five attempts. Sessions expire after eight hours, are stored as hashes, and use Secure, HttpOnly, SameSite=Strict cookies. Login codes are hashed with the server secret. Resend credentials saved through owner settings are encrypted with AES-GCM.
+```sh
+gradle :backend:test
+gradle :backend:run --args='--sync'
+gradle :backend:run --args='--mirror'
+gradle :backend:run --args='--export'
+gradle :frontend:jsBrowserDistribution
+gradle :backend:run
+```
 
-Set `ADMIN_EMAIL` and a cryptographically random `AUTH_SECRET` as runtime secrets **before allowing public traffic**. All administration routes fail closed without an authorized owner or valid email session. The trusted ChatGPT owner identity remains available for initial email setup and recovery; it is checked against `ADMIN_EMAIL` or the optional `ADMIN_USER_ID`, not simply any signed-in account.
+Open localhost:8080. The server supports `/health`, `/api/catalog`, `/api/devices`, `/api/apps`, `/api/roms`, and `/catalog.json`. Server-only paths are configurable through `PORT`, `CATALOG_PATH`, and `FRONTEND_PATH`. No secrets are needed for reading the public catalog. An optional CI `GITHUB_TOKEN` increases upstream API rate limits and is never shipped in the browser.
 
-Connect Resend using `/studio/settings` while signed in as the owner. Alternatively set `RESEND_API_KEY` and `EMAIL_FROM` as server secrets. Use a verified sender, or follow Resend's test-sender restrictions. The interface does not claim to send a code when no service is configured. Never commit credentials.
+## Automated content
 
-- Public proposal page: `/submit`
-- Email login: `/studio/login`
-- Administration: `/studio`
-- Owner email setup: `/studio/settings`
+The daily/push workflow refreshes DietDroid resource metadata and known apps' official GitHub releases, mirrors only explicitly approved permissive-license binaries, verifies SHA-256, preserves license and attribution notices, tests Ktor, compiles Compose HTML, and publishes `docs/` for GitHub Pages. Failed sources preserve last-known records. No source HTML is executed.
 
-## Development
+GitHub app issues trigger a separate workflow that validates the original repository, license and actual APK release, then prepares a metadata-only pull request. Issue content is not executed, and unknown apps are never automatically approved or downloaded. Regular refreshes do not depend on users submitting issues.
 
-Requires Node >=22.13.0. Run `npm run install:ci`, then `npm run dev`. The local loopback sign-in uses the starter's `seedy@sites.test` test identity and is absent from production builds. Put local-only values in ignored `.dev.vars` (see `.env.example`).
+## Sources and licensing
 
-Generate schema migrations with `npm run db:generate`. Build with `npm run build`; apply pending migrations to the local database before previewing. Hosted and local data are separate. Configure Sites with `d1: "DB"` and `r2: "BUCKET"`; Sites provisions storage and applies migrations during deployment. New deployments begin private; public submission access requires a public audience.
+Phone metadata includes original summaries and source attribution to DietDroid. Firmware without verified redistribution rights stays a source reference; it is not silently rehosted. Simple Keyboard is an unmodified Apache-2.0 upstream APK, accompanied by its original license and upstream/AOSP attribution. Fossify Calculator is a real GPL release; its binary is not mirrored until full corresponding-source requirements are reviewed. No listing constitutes kosher certification.
 
-`node scripts/export-source.mjs` generates the downloadable source archive and sanitized GitHub source tree. Runtime files, uploads, credentials, project identity, and screenshots are excluded. The repository includes no ROM binaries or user submissions.
+The Shalom Karr app-store repository is a prototype with fictional listings, simulated downloads, and `.test` URLs. It has no redistribution license for its source. Those mock apps are not represented as real downloads here.
 
-## Contributing
+The coffee label is present, but no payment destination has been invented. It opens an honest support dialog until the owner configures a donation account. Contact uses public GitHub issues, so no private email is exposed in the interface.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Phone records are community references, not kosher certifications or compatibility guarantees. Device drawings are illustrative concepts. Links to manufacturers, sellers, and communities imply no affiliation or endorsement.
+## Security and privacy
+
+Do not commit credentials, personal contact details, local runtime files, or private user submissions. No account or cookie is needed on the site. External GitHub issue submission follows GitHub's own account rules. CI source imports are allowlisted; APKs are never executed during ingestion. Download checksums identify files, not safety or religious suitability.
