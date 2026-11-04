@@ -750,5 +750,6 @@
         "Device resource metadata is attributed to DietDroid. Binary redistribution permissions are not established for firmware references.",
         "The Shalom Karr demo contains mock app listings and no APK downloads; these are not imported as real apps.",
         "CFOP community app metadata: cfopuser/app-store, CC-BY-NC-SA-4.0. Third-party APK rights are separate and unverified."
-    ]
+    ],
+    "entries": []
 }
