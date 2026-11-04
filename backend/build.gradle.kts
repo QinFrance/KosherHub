@@ -27,6 +27,7 @@ tasks.register<JavaExec>("exportCatalog") {
     args("--export")
     workingDir = rootProject.projectDir
     inputs.file(rootProject.file("data/catalog.json"))
+    inputs.file(rootProject.file("data/sections.json")).optional()
     inputs.file(rootProject.file("data/firmware-mirrors.json")).optional()
     outputs.file(rootProject.file("frontend/src/jsMain/resources/catalog.json"))
 }

@@ -42,3 +42,11 @@ GitHub app issues are processed entirely in Kotlin. They produce a review branch
 Contact uses GitHub issues. The coffee icon opens a support dialog; no payment destination has been invented. The Shalom Karr prototype's fictional apps and `.test` downloads are not represented as real downloads.
 
 Application code is MIT licensed. Data, font, icon, APK and source-archive licenses remain separate and retain their attribution. Never commit credentials, private chat content, private contact details, or runtime files.
+
+## Six sections
+
+Main navigation: Phones, ROMs, Guides, Tools, Filters, Reviews. The app catalog is a subgroup in Tools; existing `#apps` and app detail links remain valid. Guide and tool downloads retain their original device/resource indices, so saved links keep working.
+
+`data/sections.json` is the canonical list for additional entries, including filter listings and authored reviews. It starts empty: no provider claims, ratings, or reviews are fabricated. Each entry has a unique slug `id`, `title`, one of the six section keys in `section`, and optional `summary`, `body`, `deviceId`, `url`, and `source`. Edit this file and push to rebuild the public catalog. Removing an entry here removes it from the next export.
+
+The Ktor API also exposes section counts at `/api/sections`, device resource lists at `/api/guides` and `/api/tools`, and published entries at `/api/filters` and `/api/reviews`.

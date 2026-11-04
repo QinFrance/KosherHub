@@ -55,21 +55,31 @@ import org.kosherhub.resources.*
 
 private const val repository = "https://github.com/QinFrance/KosherHub"
 private val json = Json { ignoreUnknownKeys = true }
-private val sections = listOf("home", "phones", "apps", "roms")
-private data class Route(val section: String = "home", val id: String = "", val resource: Int? = null) {
-    val hash: String get() = "#" + section + if (id.isEmpty()) "" else "/$id" + (resource?.let { "/$it" } ?: "")
+private val sections = catalogSections.map { it.key }
+private data class Route(val section: String = "home", val id: String = "", val resource: Int? = null, val entry: Boolean = false) {
+    val hash: String get() = buildString {
+        append("#"); append(section)
+        if (id.isNotEmpty()) { if(entry) append("/entry"); append("/"); append(id); resource?.let { append("/"); append(it) } }
+    }
     val parent: Route get() = if (resource != null) copy(resource = null) else if (id.isNotEmpty()) Route(section) else Route()
 }
 private fun routeFromHash(): Route {
     val parts = window.location.hash.removePrefix("#").split('/')
-    return Route(parts.firstOrNull().takeIf { it in sections } ?: "home", parts.getOrElse(1) { "" }.take(100), parts.getOrNull(2)?.toIntOrNull())
+    val section=parts.firstOrNull().takeIf { it in sections || it in listOf("home","apps") } ?: "home"
+    val entry=parts.getOrNull(1)=="entry"
+    return Route(section,parts.getOrElse(if(entry)2 else 1){""}.take(100),if(entry)null else parts.getOrNull(2)?.toIntOrNull(),entry)
 }
 private fun go(route: Route) { window.location.hash = route.hash }
+private fun activeSection(section: String) = if(section=="apps") "tools" else section
 private fun open(url: String) {
     if (url.startsWith("https://") || url.startsWith("downloads/")) window.open(url, "_blank", "noopener,noreferrer")
 }
-private fun title(section: String) = when (section) { "phones" -> "Phones"; "apps" -> "Apps"; "roms" -> "ROMs"; else -> "Explore" }
-private fun symbol(section: String) = when (section) { "phones" -> KosherSymbols.Phone; "apps" -> KosherSymbols.Apps; "roms" -> KosherSymbols.Firmware; else -> KosherSymbols.Home }
+private fun title(section: String) = if(section=="apps") "Apps" else CatalogSection.fromKey(section)?.label ?: "Explore"
+private fun symbol(section: String) = when(activeSection(section)) {
+    "phones" -> KosherSymbols.Phone; "roms" -> KosherSymbols.Firmware; "guides" -> KosherSymbols.Document
+    "tools" -> KosherSymbols.Settings; "filters" -> KosherSymbols.Filter; "reviews" -> KosherSymbols.Bookmark
+    else -> KosherSymbols.Home
+}
 
 /** Every Material role belongs to one of two families: blue or achromatic neutral. */
 private fun palette(dark: Boolean): ColorScheme {
@@ -161,13 +171,15 @@ fun startCatalog() {
                                 else -> AnimatedContent(route, transitionSpec={ androidx.compose.animation.fadeIn(tween(130)) togetherWith androidx.compose.animation.fadeOut(tween(90)) }, label="page") { current ->
                                     val device=catalog.devices.find { it.id==current.id }
                                     val app=catalog.apps.find { it.id==current.id }
+                                    val entry=catalog.entries.find { it.id==current.id && it.section==current.section }
                                     when {
-                                        current.id.isNotEmpty() && current.section=="apps" && app!=null -> AppDetail(app, compact, { overlay="app:${app.id}" })
-                                        current.id.isNotEmpty() && device!=null && current.resource!=null -> ResourceDetail(device, current.resource, compact)
-                                        current.id.isNotEmpty() && device!=null -> PhoneDetail(device, current.section=="roms", compact)
+                                        current.entry && entry!=null -> EntryDetail(entry,catalog,compact)
+                                        !current.entry && current.id.isNotEmpty() && current.section=="apps" && app!=null -> AppDetail(app, compact, { overlay="app:${app.id}" })
+                                        !current.entry && current.id.isNotEmpty() && device!=null && current.resource!=null -> ResourceDetail(device, current.resource, compact)
+                                        !current.entry && current.id.isNotEmpty() && device!=null -> PhoneDetail(device, current.section, compact)
                                         current.id.isNotEmpty() -> EmptyState(KosherSymbols.Search, "Not found") { TextButton(onClick={go(current.parent)}) { Text("Back") } }
                                         current.section=="home" -> Home(catalog, compact)
-                                        else -> Directory(current.section,catalog,compact,queries[current.section].orEmpty(),filters[current.section]?:"all", {queries[current.section]=it}, {filters[current.section]=it})
+                                        else -> Directory(current.section,catalog,compact,queries[current.section].orEmpty(),filters[current.section] ?: if(current.section=="tools") "downloads" else "all", {queries[current.section]=it}, {filters[current.section]=it})
                                     }
                                 }
                             }
@@ -225,8 +237,8 @@ fun startCatalog() {
     Column(Modifier.width(208.dp).fillMaxHeight().padding(horizontal=20.dp,vertical=26.dp)) {
         Box(Modifier.clickable {navigate(Route())}.padding(bottom=40.dp)) {Brand()}
         sections.forEach { section ->
-            val selected=route.section==section
-            val count=when(section){"phones"->catalog.devices.size;"apps"->catalog.apps.size;"roms"->catalog.devices.sumOf{d->d.resources.count{it.kind=="firmware"}};else->0}
+            val selected=activeSection(route.section)==section
+            val count=sectionCount(catalog,section)
             Surface(onClick={navigate(Route(section))},shape=RoundedCornerShape(18.dp),color=if(selected)MaterialTheme.colorScheme.primaryContainer else Color.Transparent,modifier=Modifier.fillMaxWidth().padding(bottom=8.dp)) {
                 Row(Modifier.padding(horizontal=14.dp,vertical=15.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(13.dp)) {
                     Glyph(symbol(section),null,tint=if(selected)MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
@@ -262,8 +274,16 @@ fun startCatalog() {
     }
 }
 @Composable private fun BottomNavigation(route:Route,navigate:(Route)->Unit) {
+    var more by remember {mutableStateOf(false)}
     NavigationBar(containerColor=MaterialTheme.colorScheme.surfaceContainerLow,tonalElevation=0.dp) {
-        sections.forEach { section -> NavigationBarItem(selected=route.section==section,onClick={navigate(Route(section))},icon={Glyph(symbol(section),null)},label={Text(title(section))}) }
+        val navigationRow=this
+        listOf("phones","roms","guides").forEach { section -> NavigationBarItem(selected=route.section==section,onClick={navigate(Route(section))},icon={Glyph(symbol(section),null)},label={Text(title(section))}) }
+        Box(Modifier.weight(1f)) {
+            with(navigationRow) { NavigationBarItem(selected=activeSection(route.section) in listOf("tools","filters","reviews"),onClick={more=true},icon={Glyph(KosherSymbols.Apps,null)},label={Text("More")},modifier=Modifier.fillMaxWidth()) }
+            DropdownMenu(expanded=more,onDismissRequest={more=false}) {
+                listOf("tools","filters","reviews").forEach { section -> DropdownMenuItem(text={Text(title(section))},leadingIcon={Glyph(symbol(section),null)},onClick={more=false;navigate(Route(section))}) }
+            }
+        }
     }
 }
 
@@ -272,15 +292,17 @@ fun startCatalog() {
         item {
             Column(verticalArrangement=Arrangement.spacedBy(8.dp)) {
                 Text("Your phone. Your way.",style=if(compact)MaterialTheme.typography.headlineLarge else MaterialTheme.typography.displaySmall,fontWeight=FontWeight.Bold,letterSpacing=(-1.1).sp)
-                Text("Phones, apps & ROMs.",style=MaterialTheme.typography.bodyLarge,color=MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("Explore the library.",style=MaterialTheme.typography.bodyLarge,color=MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
         item {
-            if(compact) Row(horizontalArrangement=Arrangement.spacedBy(10.dp)) {
-                listOf("phones","apps","roms").forEach { section -> CategoryTile(section,catalog,Modifier.weight(1f),true) }
-            } else Row(horizontalArrangement=Arrangement.spacedBy(16.dp)) {listOf("phones","apps","roms").forEach {section->CategoryTile(section,catalog,Modifier.weight(1f),false)}}
+            Column(verticalArrangement=Arrangement.spacedBy(12.dp)) {
+                sections.chunked(if(compact)2 else 3).forEach { row ->
+                    Row(horizontalArrangement=Arrangement.spacedBy(12.dp)) {row.forEach {section ->CategoryTile(section,catalog,Modifier.weight(1f),compact)}}
+                }
+            }
         }
-        item {SectionHeading("Apps",{go(Route("apps"))})}
+        item {SectionHeading("Tools",{go(Route("tools"))})}
         item {
             val top=catalog.apps.filter {it.status=="mirrored"}.take(3).ifEmpty{catalog.apps.take(3)}
             Column(verticalArrangement=Arrangement.spacedBy(10.dp)) {top.forEach{AppTile(it)}}
@@ -293,11 +315,11 @@ fun startCatalog() {
     }
 }
 @Composable private fun CategoryTile(section:String,catalog:Catalog,modifier:Modifier,compact:Boolean) {
-    val count=when(section){"phones"->catalog.devices.size;"apps"->catalog.apps.size;else->catalog.devices.sumOf {it.resources.count{r->r.kind=="firmware"}}}
+    val count=sectionCount(catalog,section)
     Card(onClick={go(Route(section))},modifier=modifier,colors=CardDefaults.cardColors(containerColor=MaterialTheme.colorScheme.primaryContainer),shape=RoundedCornerShape(if(compact)24.dp else 28.dp)) {
         Column(Modifier.padding(if(compact)16.dp else 24.dp).height(if(compact)100.dp else 112.dp),verticalArrangement=Arrangement.SpaceBetween) {
             Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween,verticalAlignment=Alignment.CenterVertically) {Glyph(symbol(section),null,if(compact)26 else 32,MaterialTheme.colorScheme.onPrimaryContainer);if(!compact)Glyph(KosherSymbols.Forward,null,tint=MaterialTheme.colorScheme.onPrimaryContainer)}
-            Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.Bottom,horizontalArrangement=Arrangement.SpaceBetween) {Text(title(section),style=if(compact)MaterialTheme.typography.titleSmall else MaterialTheme.typography.titleLarge,color=MaterialTheme.colorScheme.onPrimaryContainer);if(!compact)Text("$count",style=MaterialTheme.typography.titleLarge,color=MaterialTheme.colorScheme.onPrimaryContainer)}
+            Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.Bottom,horizontalArrangement=Arrangement.SpaceBetween) {Text(title(section),style=if(compact)MaterialTheme.typography.titleSmall else MaterialTheme.typography.titleLarge,color=MaterialTheme.colorScheme.onPrimaryContainer);Text("$count",style=if(compact)MaterialTheme.typography.titleSmall else MaterialTheme.typography.titleLarge,color=MaterialTheme.colorScheme.onPrimaryContainer)}
         }
     }
 }
@@ -306,27 +328,61 @@ fun startCatalog() {
 @Composable private fun Directory(section:String,catalog:Catalog,compact:Boolean,query:String,filter:String,search:(String)->Unit,select:(String)->Unit) {
     Column(Modifier.fillMaxSize().padding(horizontal=if(compact)20.dp else 36.dp)) {
         if(!compact) Text(title(section),style=MaterialTheme.typography.displaySmall,fontWeight=FontWeight.Bold,modifier=Modifier.padding(bottom=20.dp))
-        OutlinedTextField(value=query,onValueChange=search,placeholder={Text("Search")},leadingIcon={Glyph(KosherSymbols.Search,null)},trailingIcon={if(query.isNotEmpty())Action(KosherSymbols.Close,"Clear search"){search("")}},singleLine=true,shape=RoundedCornerShape(20.dp),modifier=Modifier.fillMaxWidth().heightIn(min=56.dp).semantics { contentDescription = "Search ${title(section)}" },colors=OutlinedTextFieldDefaults.colors(unfocusedBorderColor=MaterialTheme.colorScheme.outlineVariant))
-        Row(Modifier.fillMaxWidth().padding(vertical=12.dp),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-            val options=if(section=="phones")listOf("all" to "All","bar" to "Bar","flip" to "Flip","touch" to "Touch") else if(section=="apps")listOf("all" to "All","hosted" to "Hosted","cfop" to "CFOP") else listOf("all" to "All","hosted" to "Hosted")
+        OutlinedTextField(value=query,onValueChange=search,placeholder={Text("Search")},leadingIcon={Glyph(KosherSymbols.Search,null)},trailingIcon={if(query.isNotEmpty())Action(KosherSymbols.Close,"Clear search"){search("")}},singleLine=true,shape=RoundedCornerShape(20.dp),modifier=Modifier.fillMaxWidth().heightIn(min=56.dp).semantics {contentDescription="Search ${title(section)}"},colors=OutlinedTextFieldDefaults.colors(unfocusedBorderColor=MaterialTheme.colorScheme.outlineVariant))
+        val options=when(section) {
+            "phones" -> listOf("all" to "All","bar" to "Bar","flip" to "Flip","touch" to "Touch")
+            "tools" -> listOf("downloads" to "Downloads","apps" to "Apps","all" to "All","hosted" to "Hosted")
+            "apps" -> listOf("all" to "All","hosted" to "Hosted","cfop" to "CFOP")
+            "roms" -> listOf("all" to "All","hosted" to "Hosted")
+            else -> emptyList()
+        }
+        if(options.isNotEmpty()) Row(Modifier.fillMaxWidth().padding(vertical=12.dp),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
             options.forEach{(id,label)->FilterChip(selected=filter==id,onClick={select(id)},label={Text(label)},leadingIcon=if(filter==id){{Glyph(KosherSymbols.Check,null,16)}}else null)}
+        } else Spacer(Modifier.height(16.dp))
+        if(section=="phones") {
+            val devices=catalog.devices.filter{(filter=="all"||it.form==filter)&&(it.name+it.brand).contains(query,true)}
+            if(devices.isEmpty())EmptyState(KosherSymbols.Search,"No results") else LazyVerticalGrid(columns=GridCells.Adaptive(if(compact)300.dp else 250.dp),contentPadding=PaddingValues(bottom=24.dp),verticalArrangement=Arrangement.spacedBy(14.dp),horizontalArrangement=Arrangement.spacedBy(16.dp)) {items(devices,key={it.id}){PhoneTile(it,compact)}}
+        } else {
+            val apps=sectionApps(catalog,section).filter {
+                section!="tools" || filter!="downloads"
+            }.filter { (filter!="hosted"||it.status=="mirrored")&&(filter!="cfop"||it.id.startsWith("cfop-"))&&(it.name+it.category).contains(query,true) }
+            val resources=if(section=="apps"||(section=="tools"&&filter=="apps"))emptyList() else sectionResources(catalog,section).filter {(filter!="hosted"||it.resource.mirrorUrl.isNotEmpty())&&(it.device.name+it.resource.title).contains(query,true)}
+            val entries=if(section=="apps"||(section=="tools"&&filter in listOf("apps","downloads","hosted")))emptyList() else sectionEntries(catalog,section).filter {(it.title+it.summary+it.body).contains(query,true)}
+            if(apps.isEmpty()&&resources.isEmpty()&&entries.isEmpty()) {
+                EmptyState(symbol(section),if(query.isNotEmpty()||filter!="all")"No results" else when(section){"filters"->"No filters yet";"reviews"->"No reviews yet";else->"No content yet"})
+            } else LazyVerticalGrid(columns=GridCells.Adaptive(if(compact)300.dp else 330.dp),contentPadding=PaddingValues(bottom=24.dp),verticalArrangement=Arrangement.spacedBy(12.dp),horizontalArrangement=Arrangement.spacedBy(16.dp)) {
+                items(apps,key={"app:${it.id}"}){AppTile(it)}
+                items(resources,key={"resource:${it.routeKey}"}){SectionResourceTile(it,section)}
+                items(entries,key={"entry:${it.id}"}){EntryTile(it)}
+            }
         }
-        when(section) {
-            "apps" -> {
-                val apps=catalog.apps.filter{(filter!="hosted"||it.status=="mirrored")&&(filter!="cfop"||it.id.startsWith("cfop-"))&&(it.name+it.category).contains(query,true)}
-                if(apps.isEmpty())EmptyState(KosherSymbols.Search,"No results") else LazyVerticalGrid(columns=GridCells.Adaptive(if(compact)300.dp else 330.dp),contentPadding=PaddingValues(bottom=24.dp),verticalArrangement=Arrangement.spacedBy(12.dp),horizontalArrangement=Arrangement.spacedBy(16.dp)) {items(apps,key={it.id}){AppTile(it)}}
-            }
-            "phones" -> {
-                val devices=catalog.devices.filter{(filter=="all"||it.form==filter)&&(it.name+it.brand).contains(query,true)}
-                if(devices.isEmpty())EmptyState(KosherSymbols.Search,"No results") else LazyVerticalGrid(columns=GridCells.Adaptive(if(compact)300.dp else 250.dp),contentPadding=PaddingValues(bottom=24.dp),verticalArrangement=Arrangement.spacedBy(14.dp),horizontalArrangement=Arrangement.spacedBy(16.dp)) {items(devices,key={it.id}){PhoneTile(it,compact)}}
-            }
-            else -> {
-                val devices=catalog.devices.filter{d->d.resources.any{it.kind=="firmware"&&(filter!="hosted"||it.mirrorUrl.isNotEmpty())}&&(d.name+d.resources.joinToString{it.title}).contains(query,true)}
-                if(devices.isEmpty())EmptyState(KosherSymbols.Search,"No results") else LazyColumn(contentPadding=PaddingValues(bottom=24.dp),verticalArrangement=Arrangement.spacedBy(14.dp)) {items(devices,key={it.id}){device->
-                    Card(onClick={go(Route("roms",device.id))},shape=RoundedCornerShape(22.dp),colors=CardDefaults.cardColors(containerColor=MaterialTheme.colorScheme.surfaceContainerLow),modifier=Modifier.fillMaxWidth()) {Row(Modifier.padding(20.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(16.dp)){IconTile(KosherSymbols.Firmware);Column(Modifier.weight(1f)){Text(device.name,fontWeight=FontWeight.SemiBold);Text("${device.resources.count{it.kind=="firmware"}} files",style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)};Glyph(KosherSymbols.Chevron,null)}}
-                }}
-            }
+    }
+}
+@Composable private fun SectionResourceTile(reference:SectionResource,section:String) {
+    Card(onClick={go(Route(section,reference.device.id,reference.resourceIndex))},shape=RoundedCornerShape(22.dp),colors=CardDefaults.cardColors(containerColor=MaterialTheme.colorScheme.surfaceContainerLow),modifier=Modifier.fillMaxWidth().heightIn(min=100.dp)) {
+        Row(Modifier.padding(18.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(14.dp)) {
+            IconTile(symbol(section))
+            Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(5.dp)) {Text(reference.resource.title,style=MaterialTheme.typography.titleMedium,fontWeight=FontWeight.SemiBold,maxLines=2,overflow=TextOverflow.Ellipsis);Text(reference.device.name,style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)}
+            Glyph(if(reference.resource.mirrorUrl.isNotEmpty())KosherSymbols.Download else KosherSymbols.Chevron,null,20,MaterialTheme.colorScheme.primary)
         }
+    }
+}
+@Composable private fun EntryTile(entry:ContentEntry) {
+    Card(onClick={go(Route(entry.section,entry.id,entry=true))},shape=RoundedCornerShape(22.dp),colors=CardDefaults.cardColors(containerColor=MaterialTheme.colorScheme.surfaceContainerLow),modifier=Modifier.fillMaxWidth().heightIn(min=100.dp)) {
+        Row(Modifier.padding(18.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(14.dp)) {
+            IconTile(symbol(entry.section));Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(5.dp)){Text(entry.title,style=MaterialTheme.typography.titleMedium,fontWeight=FontWeight.SemiBold);if(entry.summary.isNotEmpty())Text(entry.summary,style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant,maxLines=2,overflow=TextOverflow.Ellipsis)};Glyph(KosherSymbols.Chevron,null,20)
+        }
+    }
+}
+@Composable private fun EntryDetail(entry:ContentEntry,catalog:Catalog,compact:Boolean) {
+    DetailLayout(compact) {
+        Glyph(symbol(entry.section),null,44,MaterialTheme.colorScheme.primary)
+        Text(entry.title,style=MaterialTheme.typography.headlineMedium,fontWeight=FontWeight.Bold)
+        if(entry.summary.isNotEmpty())Text(entry.summary,style=MaterialTheme.typography.bodyLarge)
+        if(entry.body.isNotEmpty())SelectionContainer{Text(entry.body)}
+        catalog.devices.find{it.id==entry.deviceId}?.let{device->FilledTonalButton(onClick={go(Route("phones",device.id))}){Glyph(KosherSymbols.Phone,null);Spacer(Modifier.width(8.dp));Text(device.name)}}
+        if(entry.url.isNotEmpty())TextButton(onClick={open(entry.url)}){Glyph(KosherSymbols.External,null);Spacer(Modifier.width(8.dp));Text("Website")}
+        if(entry.source.isNotEmpty())Text(entry.source,style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 @Composable private fun IconTile(icon:SymbolPath,size:Int=48) {Surface(shape=RoundedCornerShape(16.dp),color=MaterialTheme.colorScheme.primaryContainer,modifier=Modifier.size(size.dp)){Box(contentAlignment=Alignment.Center){Glyph(icon,null,24,MaterialTheme.colorScheme.onPrimaryContainer)}}}
@@ -411,30 +467,31 @@ fun startCatalog() {
         Text("Check device compatibility and permissions before installing.",style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
-@Composable private fun PhoneDetail(device:Device,firmware:Boolean,compact:Boolean) {
+@Composable private fun PhoneDetail(device:Device,section:String,compact:Boolean) {
     DetailLayout(compact) {
-        Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(24.dp)) {PhoneArt(device.form,Modifier.size(68.dp,110.dp));Column(Modifier.weight(1f)){Text(device.brand,color=MaterialTheme.colorScheme.onSurfaceVariant,style=MaterialTheme.typography.labelLarge);Text(device.name,style=MaterialTheme.typography.headlineMedium,fontWeight=FontWeight.Bold);Text(if(firmware)"Firmware" else device.form.replaceFirstChar{it.uppercase()},color=MaterialTheme.colorScheme.onSurfaceVariant)}}
-        if(!firmware)Text(device.description,style=MaterialTheme.typography.bodyLarge)
-        val resources=device.resources.withIndex().filter{!firmware||it.value.kind=="firmware"}
+        Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(24.dp)) {PhoneArt(device.form,Modifier.size(68.dp,110.dp));Column(Modifier.weight(1f)){Text(device.brand,color=MaterialTheme.colorScheme.onSurfaceVariant,style=MaterialTheme.typography.labelLarge);Text(device.name,style=MaterialTheme.typography.headlineMedium,fontWeight=FontWeight.Bold);Text(if(section!="phones")title(section) else device.form.replaceFirstChar{it.uppercase()},color=MaterialTheme.colorScheme.onSurfaceVariant)}}
+        if(section=="phones")Text(device.description,style=MaterialTheme.typography.bodyLarge)
+        val resources=device.resources.withIndex().filter{section=="phones"||resourceSection(it.value)?.key==section}
         resources.forEach{(index,r)->
-            Card(onClick={go(Route(if(firmware)"roms" else "phones",device.id,index))},shape=RoundedCornerShape(20.dp),colors=CardDefaults.cardColors(containerColor=MaterialTheme.colorScheme.surfaceContainerLow),modifier=Modifier.fillMaxWidth()) {Row(Modifier.padding(18.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(14.dp)) {Glyph(if(r.kind=="firmware")KosherSymbols.Firmware else KosherSymbols.Document,null);Column(Modifier.weight(1f)){Text(r.title,fontWeight=FontWeight.Medium);Text(if(r.mirrorUrl.isNotEmpty())"Hosted" else r.kind.replaceFirstChar{it.uppercase()},style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)};Glyph(KosherSymbols.Chevron,null,20)}}
+            Card(onClick={go(Route(section,device.id,index))},shape=RoundedCornerShape(20.dp),colors=CardDefaults.cardColors(containerColor=MaterialTheme.colorScheme.surfaceContainerLow),modifier=Modifier.fillMaxWidth()) {Row(Modifier.padding(18.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(14.dp)) {Glyph(symbol(resourceSection(r)?.key ?: "guides"),null);Column(Modifier.weight(1f)){Text(r.title,fontWeight=FontWeight.Medium);Text(if(r.mirrorUrl.isNotEmpty())"Hosted" else title(resourceSection(r)?.key ?: "guides"),style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)};Glyph(KosherSymbols.Chevron,null,20)}}
         }
         if(resources.isEmpty())Text("No files yet.",color=MaterialTheme.colorScheme.onSurfaceVariant)
-        if(firmware)Text("Match the exact model. Back up before flashing.",style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
+        if(section=="roms")Text("Match the exact model. Back up before flashing.",style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 @Composable private fun ResourceDetail(device:Device,index:Int,compact:Boolean) {
     val r=device.resources.getOrNull(index)
     if(r==null){EmptyState(KosherSymbols.Search,"Not found");return}
+    val section=resourceSection(r)?.key ?: "guides"
     DetailLayout(compact) {
-        Glyph(if(r.kind=="firmware")KosherSymbols.Firmware else KosherSymbols.Document,null,44,MaterialTheme.colorScheme.primary)
+        Glyph(symbol(section),null,44,MaterialTheme.colorScheme.primary)
         Text(r.title,style=MaterialTheme.typography.headlineMedium,fontWeight=FontWeight.Bold)
         Text(device.name,color=MaterialTheme.colorScheme.onSurfaceVariant)
-        Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){Meta(r.kind.replaceFirstChar{it.uppercase()});Meta(if(r.mirrorUrl.isNotEmpty())"Hosted" else "Source reference")}
-        Button(onClick={open(r.mirrorUrl.ifEmpty{r.url})},shape=RoundedCornerShape(20.dp),contentPadding=PaddingValues(20.dp,16.dp)) {Glyph(if(r.kind=="guide")KosherSymbols.Document else KosherSymbols.Download,null);Spacer(Modifier.width(10.dp));Text(if(r.kind=="guide")"Read guide" else "Download");if(r.mirrorUrl.isEmpty()){Spacer(Modifier.width(8.dp));Glyph(KosherSymbols.External,null,16)}}
+        Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){Meta(title(section));Meta(if(r.mirrorUrl.isNotEmpty())"Hosted" else "Source reference")}
+        Button(onClick={open(r.mirrorUrl.ifEmpty{r.url})},shape=RoundedCornerShape(20.dp),contentPadding=PaddingValues(20.dp,16.dp)) {Glyph(if(section=="guides")KosherSymbols.Document else KosherSymbols.Download,null);Spacer(Modifier.width(10.dp));Text(if(section=="guides")"Read guide" else "Download");if(r.mirrorUrl.isEmpty()){Spacer(Modifier.width(8.dp));Glyph(KosherSymbols.External,null,16)}}
         if(r.sha256.isNotBlank())SelectionContainer{Text("SHA-256\n${r.sha256}",style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)}
         Text("Source: ${r.source}",style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
-        if(r.kind=="firmware")Text("Exact hardware revision required. Back up before flashing.",style=MaterialTheme.typography.bodyMedium)
+        if(section=="roms")Text("Exact hardware revision required. Back up before flashing.",style=MaterialTheme.typography.bodyMedium)
     }
 }
 @Composable private fun DetailLayout(compact:Boolean,body:@Composable ColumnScope.()->Unit) {

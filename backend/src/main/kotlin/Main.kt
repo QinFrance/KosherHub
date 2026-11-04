@@ -11,7 +11,7 @@ import java.io.File
 
 val catalogJson=Json { ignoreUnknownKeys=true;prettyPrint=true;encodeDefaults=true }
 fun loadCatalog(path:String = System.getenv("CATALOG_PATH")?:"data/catalog.json"):Catalog {
-    val catalog = catalogJson.decodeFromString<Catalog>(File(path).readText())
+    val catalog = loadSectionEntries(catalogJson.decodeFromString<Catalog>(File(path).readText()))
     val mirrors = File("data/firmware-mirrors.json")
     return if (mirrors.exists()) applyFirmwareMirrors(catalog, catalogJson.decodeFromString<FirmwareMirrorIndex>(mirrors.readText()).assets) else catalog
 }
@@ -22,7 +22,12 @@ fun Application.module(catalog:Catalog = loadCatalog()) {
         get("/api/catalog"){call.respond(catalog)}
         get("/api/devices"){call.respond(catalog.devices)}
         get("/api/apps"){call.respond(catalog.apps)}
-        get("/api/roms"){call.respond(catalog.devices.flatMap{d->d.resources.filter{it.kind=="firmware"}})}
+        get("/api/sections"){call.respond(catalogSections.associate{it.key to sectionCount(catalog,it)})}
+        get("/api/roms"){call.respond(sectionResources(catalog,"roms").map{it.resource})}
+        get("/api/guides"){call.respond(sectionResources(catalog,"guides").map{it.resource})}
+        get("/api/tools"){call.respond(sectionResources(catalog,"tools").map{it.resource})}
+        get("/api/filters"){call.respond(sectionEntries(catalog,"filters"))}
+        get("/api/reviews"){call.respond(sectionEntries(catalog,"reviews"))}
         get("/catalog.json"){call.respond(catalog)}
         staticFiles("/",File(System.getenv("FRONTEND_PATH")?:"frontend/build/dist/wasmJs/productionExecutable"))
     }
