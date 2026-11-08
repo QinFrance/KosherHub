@@ -1,5 +1,5 @@
 {
-    "updated": "2026-11-07T11:40:54.566956380Z",
+    "updated": "2026-11-08T11:53:46.592622193Z",
     "repository": "QinFrance/KosherHub",
     "assets": [
         {
@@ -305,6 +305,7 @@
     ],
     "status": "incomplete",
     "failures": [
-        "alltechdev/DietDroid: release metadata is not publicly accessible (GitHub API returned HTTP 404 for /repos/alltechdev/DietDroid/releases)"
+        "alltechdev/DietDroid: release metadata is not publicly accessible (request not processed by peer)",
+        "Noochtech/awesome-qin-f21-pro: release metadata is not publicly accessible (request not processed by peer)"
     ]
 }
