@@ -1,5 +1,5 @@
 {
-    "updated": "2026-11-08",
+    "updated": "2026-11-09",
     "devices": [
         {
             "id": "cat-s22-flip",
@@ -587,11 +587,11 @@
             "category": "Transportation",
             "repository": "https://github.com/cfopuser/app-store",
             "license": "Binary rights unverified",
-            "version": "hopon-v10.2.24",
-            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/hopon-v10.2.24/hopon-patched-10.2.24.apk",
+            "version": "hopon-v10.2.30",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/hopon-v10.2.30/hopon-patched-10.2.30.apk",
             "sourceArchive": "",
             "sha256": "",
-            "bytes": 60507346,
+            "bytes": 60515619,
             "status": "community-release",
             "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
         },
@@ -677,11 +677,11 @@
             "category": "Music & Audio",
             "repository": "https://github.com/cfopuser/app-store",
             "license": "Binary rights unverified",
-            "version": "spotify-v9.1.94.1929",
-            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/spotify-v9.1.94.1929/spotify-patched-9.1.94.1929.apk",
+            "version": "spotify-v9.1.98.621",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/spotify-v9.1.98.621/spotify-patched-9.1.98.621.apk",
             "sourceArchive": "",
             "sha256": "",
-            "bytes": 109859603,
+            "bytes": 111077956,
             "status": "community-release",
             "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
         },
