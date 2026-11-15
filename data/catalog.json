@@ -1,5 +1,5 @@
 {
-    "updated": "2026-11-14",
+    "updated": "2026-11-15",
     "devices": [
         {
             "id": "cat-s22-flip",
@@ -572,11 +572,11 @@
             "category": "Transportation",
             "repository": "https://github.com/cfopuser/app-store",
             "license": "Binary rights unverified",
-            "version": "egg-v10.2.16",
-            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/egg-v10.2.16/egg-patched-10.2.16.apk",
+            "version": "egg-v10.2.30",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/egg-v10.2.30/egg-patched-10.2.30.apk",
             "sourceArchive": "",
             "sha256": "",
-            "bytes": 58038181,
+            "bytes": 58282705,
             "status": "community-release",
             "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
         },
@@ -617,11 +617,11 @@
             "category": "Music & Audio",
             "repository": "https://github.com/cfopuser/app-store",
             "license": "Binary rights unverified",
-            "version": "metrolist-v13.7.0",
-            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/metrolist-v13.7.0/metrolist-patched-13.7.0.apk",
+            "version": "metrolist-v14.0.0",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/metrolist-v14.0.0/metrolist-patched-14.0.0.apk",
             "sourceArchive": "",
             "sha256": "",
-            "bytes": 27343115,
+            "bytes": 15352247,
             "status": "community-release",
             "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
         },
