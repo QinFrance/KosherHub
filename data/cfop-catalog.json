@@ -1,5 +1,5 @@
 {
-    "updated": "2026-11-23",
+    "updated": "2026-11-24",
     "devices": [],
     "apps": [
         {
@@ -144,11 +144,11 @@
             "category": "Music & Audio",
             "repository": "https://github.com/cfopuser/app-store",
             "license": "Binary rights unverified",
-            "version": "spotify-v9.2.0.2053",
-            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/spotify-v9.2.0.2053/spotify-patched-9.2.0.2053.apk",
+            "version": "spotify-v9.2.2.2593",
+            "downloadUrl": "https://github.com/cfopuser/app-store/releases/download/spotify-v9.2.2.2593/spotify-patched-9.2.2.2593.apk",
             "sourceArchive": "",
             "sha256": "",
-            "bytes": 111289424,
+            "bytes": 111471664,
             "status": "community-release",
             "notes": "CFOP community-modified build, not an official publisher release. Kosher suitability and binary redistribution rights have not been verified by KosherHub. Factual catalog metadata is attributed to cfopuser/app-store (CC-BY-NC-SA-4.0); that catalog license does not establish rights to third-party APKs. This APK is not mirrored by KosherHub."
         },
